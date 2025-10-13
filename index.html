@@ -1,15 +1,92 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>Black Jack</title>
-        <link rel="stylesheet" href="styles.css">
-    </head>
-    <body>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Black-Jacks</title>
+</head>
+<body>
+  <aside>
+    <nav>
+      <ul>
+        <li id="shop-button"><button>Shop</button></li>
+        <li id="decks-button"><button>Decks</button></li>
+      </ul>
+    </nav>
+    <!-- Clicking shop brings up this section -->
+    <section id="shop">
+      <div class="deck-option" id="deck1">Deck1</div>
+      <div class="deck-option" id="deck2">Deck2</div>
+      <div class="deck-option" id="deck3">Deck3</div>
+      <div class="deck-option" id="deck4">Deck4</div>
+      <div class="deck-option" id="deck5">Deck5</div>
+      <div class="deck-option" id="deck6">Deck6</div>
+      <div class="deck-option" id="deck7">Deck7</div>
+      <div class="deck-option" id="deck8">Deck8</div>
+    </section>
+    <!-- 
+      Clicking decks brings up this section
+      when user buys decks they will display here
+    -->
+    <section id="decks"></section>
 
-        <h1>Black Jack</h1>
+    <article id="game-area">
+      <!-- Primarily visual area of the game -->
+      <section id="table">
+        <!-- Cards to remain hidden until dealt -->
+        <!-- JS to handle toggling visibility and card values -->
+        
+        <!-- Dealer section -->
+        <div class="card" id="dealerC5">HIDDEN</div>
+        <div class="card" id="dealerC4">HIDDEN</div>
+        <div class="card" id="dealerC3">HIDDEN</div>
+        <!-- Use classlist.toggle to switch this card between unflipped and card in JS -->
+        <div class="unflipped-card" id="dealerC2">HIDDEN</div>
+        <div class="card" id="dealerC1">HIDDEN</div>
+        <div class="unflipped-card" id="dealer-deck">CardBackground</div>
+        <p id="dealer-total">Total: 0</p>
+        
+        <!-- Player likely will not have 5 cards but we need to support the possiblity -->
+        <!-- Player split section -->
+        <div class="card" id="player-splitC5">HIDDEN</div>
+        <div class="card" id="player-splitC4">HIDDEN</div>
+        <div class="card" id="player-splitC3">HIDDEN</div>
+        <div class="card" id="player-splitC2">HIDDEN</div>
+        <div class="card" id="player-splitC1">HIDDEN</div>
 
-        <script src="script.js"></script>
-        <script src="leaderboard.js"></script>
-    </body>
+        <!-- Player section -->
+        <div class="card" id="playerC5">HIDDEN</div>
+        <div class="card" id="playerC4">HIDDEN</div>
+        <div class="card" id="playerC3">HIDDEN</div>
+        <div class="card" id="playerC2">HIDDEN</div>
+        <div class="card" id="playerC1">HIDDEN</div>
+
+        <!-- Value will likely be overwritten using setTextContent() -->
+        <p id="player-total">Total: 0</p>
+      </section>
+
+      <section id="buttons">
+        <!-- Primary buttons are always visible -->
+        <button class="primary-button" id="hit-button">HIT</button>
+        <!-- No additional class, only usable once per game -->
+        <button id="deal-button">DEAL</button>
+        <button class="primary-button" id="stand-button">STAND</button>
+        <!-- Secondary buttons are only available for certain hands -->
+        <button class="secondary-button" id="split-button">SPLIT</button>
+        <button class="secondary-button" id="double-button">DOUBLE</button>
+
+      </section>
+
+      <aside>
+        <!-- Will display the poker chip image as well as include text representing current winnings -->
+        <figure id="winnings"></figure>
+        <button class="betting-button" id="bet-100"></button>
+        <button class="betting-button" id="bet-25"></button>
+        <button class="betting-button" id="bet-5"></button>
+        <button class="betting-button" id="bet-1"></button>
+      </aside>
+
+    </article>
+  </aside>
+  <script src="leaderboard.js"></script>
+</body>
 </html>
