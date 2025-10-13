@@ -1,0 +1,80 @@
+body {
+  background-color: #006400;
+  color: white;
+  margin: 0;
+  font-family: sans-serif;
+  border: 10px solid #4f2507;
+  box-sizing: border-box;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}   
+
+aside {
+  display: flex;
+  flex-direction: row;
+  width: 1350px;                 
+  /* sets width */
+  height: 700px;                 
+  /* sets height */
+  border: 2px solid black;
+  background-color: black;
+  box-sizing: border-box;
+}
+
+nav {
+  width: 200px;
+  background-color: black;
+  border: 1px solid white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 15px 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+nav button {
+  width: 90px;
+  height: 40px;
+  background-color: #FFD966;
+  color: black;
+  border: 2px solid black;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#game-area {
+  flex-grow: 1;
+  background-color: #006400;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+/* RIGHT SIDE */
+#game-area > aside {
+  width: 200px;
+  background-color: black;
+  border: 1px solid white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 10px;
+  box-sizing: border-box;
+  height: 100%;
+}
