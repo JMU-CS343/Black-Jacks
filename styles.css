@@ -241,7 +241,72 @@ nav button {
 
 #buttons{
   place-self: center;
-  display: flex;
+  display: grid;
+  grid-template-areas: "hit deal stand"
+                       /* ". deal ." */
+                       "split deal doubleButton";
+}
+
+.action-button{
+  background-color: black;
+  color: white;
+  border: 5px solid white;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+.action-button:hover {
+  background-color: white;
+  color: black;
+  border: 5px solid black;
+}
+
+.primary-button{
+  width: 10vw;
+  height: 7vh;
+  font-size: x-large;
+  margin: 3vh 4vw;
+}
+
+.secondary-button{
+  width: 5vw;
+  height: 6vh;
+  font-size: medium;
+  margin: 0 4vw;
+}
+
+#hit-button{
+  grid-area: hit;
+}
+
+#deal-button{
+  grid-area: deal;
+  margin-top: 4vh;
+  width: 10vw;
+  border: 5px solid black;
+  border-radius: 200px;
+
+  font-size: xx-large;
+  font-weight: bold;
+}
+
+#deal-button:hover{
+  background-color: black;
+  color: white;
+  border: 5px solid white;
+}
+
+#stand-button{
+  grid-area: stand;
+}
+
+#split-button{
+  grid-area: split;
+  justify-self: end;
+}
+
+#double-button{
+  grid-area: doubleButton
 }
 
 /* RIGHT SIDE */
