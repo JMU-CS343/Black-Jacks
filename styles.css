@@ -20,7 +20,7 @@ aside {
   /* sets width */
   height: 700px;                 
   /* sets height */
-  border: 2px solid black;
+  /* border: 2px solid black; */
   background-color: black;
   box-sizing: border-box;
 }
@@ -60,10 +60,188 @@ nav button {
   flex-grow: 1;
   background-color: #006400;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-direction: row;
+  flex-direction: column;
   box-sizing: border-box;
+}
+
+#table{
+  background: black;
+  height: 70%;
+  padding-left: 1vw;
+  padding-right: 1vw;
+  margin: 0 3vw;
+  border: 1vw solid white;
+  border-bottom-left-radius: 50vw;
+  border-bottom-right-radius: 50vw;
+  /* display: flex;
+  flex-direction: column;
+  align-items: center; */
+  display: grid;
+  grid-template-areas: "dealer dealer"
+                       "split player";
+}
+
+#dealer{
+  grid-area: dealer;
+  place-self: center;
+  text-align: center;
+  position: relative;
+}
+
+#dealer > .unflipped-card{
+  height: 11vh;
+  width: 4vw;
+  border: 2px;
+  border-radius: 5px;
+  background-color: blue;
+}
+
+#dealerC5 {
+  position:absolute;
+  top: -100px;
+  left: -250px;
+}
+
+#dealerC4 {
+  position:absolute;
+  top: -100px;
+  left: -150px;
+}
+
+#dealerC3 {
+  position:absolute;
+  top: -100px;
+  left: -50px;
+}
+
+#dealerC2 {
+  position:absolute;
+  top: -100px;
+  left: 50px;
+}
+
+#dealerC1 {
+  position:absolute;
+  top: -100px;
+  left: 150px;
+}
+
+#dealer-deck {
+  position: absolute;
+  left: 300px;
+  top: -40px;
+  transform: rotate(30deg);
+  background-color: blue;
+
+  writing-mode: sideways-lr;
+}
+
+#dealer-total{
+  position: absolute;
+  top: 10px;
+  left: 130px;
+  width: 8vw;
+}
+
+#player-split{
+  grid-area: split;
+  place-self: center;
+  text-align: center;
+  position: relative;
+}
+
+.card{
+  height: 11vh;
+  width: 4vw;
+  border: 2px;
+  border-radius: 5px;
+  background-color: blue;
+}
+
+#player-splitC5{
+  position: absolute;
+  top: -200px;
+  left: -45px;
+}
+
+#player-splitC4{
+  position: absolute;
+  top: -170px;
+  left: -20px;
+}
+
+#player-splitC3{
+  position: absolute;
+  top: -140px;
+  left: -5px;
+}
+
+#player-splitC2{
+  position: absolute;
+  top: -110px;
+  left: 20px;
+}
+
+#player-splitC1{
+  position: absolute;
+  top: -80px;
+  left: 45px;
+}
+
+#player-split-total{
+  position: absolute;
+  width: 12vw;
+  top: 20px;
+  left: 0px;
+}
+
+#player{
+  grid-area: player;
+  place-self: center;
+  text-align: center;
+  position: relative;
+}
+
+#playerC5{
+  position: absolute;
+  top: -200px;
+  left: -200px;
+}
+
+#playerC4{
+  position: absolute;
+  top: -170px;
+  left: -175px;
+}
+
+#playerC3{
+  position: absolute;
+  top: -140px;
+  left: -150px;
+}
+
+#playerC2{
+  position: absolute;
+  top: -110px;
+  left: -125px;
+}
+
+#playerC1{
+  position: absolute;
+  top: -80px;
+  left: -100px;
+}
+
+#player-total{
+  position: absolute;
+  top: 20px;
+  left: -150px;
+  width: 8vw;
+}
+
+#buttons{
+  place-self: center;
+  display: flex;
 }
 
 /* RIGHT SIDE */
@@ -78,9 +256,4 @@ nav button {
   padding: 10px;
   box-sizing: border-box;
   height: 100%;
-}
-
-#table{
-  background: black;
-
 }
