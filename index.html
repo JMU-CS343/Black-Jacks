@@ -39,32 +39,38 @@
         <!-- JS to handle toggling visibility and card values -->
         
         <!-- Dealer section -->
-        <div class="card" id="dealerC5">HIDDEN</div>
-        <div class="card" id="dealerC4">HIDDEN</div>
-        <div class="card" id="dealerC3">HIDDEN</div>
-        <!-- Use classlist.toggle to switch this card between unflipped and card in JS -->
-        <div class="unflipped-card" id="dealerC2">HIDDEN</div>
-        <div class="card" id="dealerC1">HIDDEN</div>
-        <div class="unflipped-card" id="dealer-deck">CardBackground</div>
-        <p id="dealer-total">Total: 0</p>
+        <div id="dealer">
+          <div class="card" id="dealerC5">HIDDEN</div>
+          <div class="card" id="dealerC4">HIDDEN</div>
+          <div class="card" id="dealerC3">HIDDEN</div>
+          <!-- Use classlist.toggle to switch this card between unflipped and card in JS -->
+          <div class="unflipped-card" id="dealerC2">HIDDEN</div>
+          <div class="card" id="dealerC1">HIDDEN</div>
+          <div class="unflipped-card" id="dealer-deck">CardBackground</div>
+          <p id="dealer-total">Total: 0</p>
+        </div>
         
         <!-- Player likely will not have 5 cards but we need to support the possiblity -->
         <!-- Player split section -->
-        <div class="card" id="player-splitC5">HIDDEN</div>
-        <div class="card" id="player-splitC4">HIDDEN</div>
-        <div class="card" id="player-splitC3">HIDDEN</div>
-        <div class="card" id="player-splitC2">HIDDEN</div>
-        <div class="card" id="player-splitC1">HIDDEN</div>
+        <div id="player-split">
+          <div class="card" id="player-splitC5">HIDDEN</div>
+          <div class="card" id="player-splitC4">HIDDEN</div>
+          <div class="card" id="player-splitC3">HIDDEN</div>
+          <div class="card" id="player-splitC2">HIDDEN</div>
+          <div class="card" id="player-splitC1">HIDDEN</div>
+        </div>
 
         <!-- Player section -->
-        <div class="card" id="playerC5">HIDDEN</div>
-        <div class="card" id="playerC4">HIDDEN</div>
-        <div class="card" id="playerC3">HIDDEN</div>
-        <div class="card" id="playerC2">HIDDEN</div>
-        <div class="card" id="playerC1">HIDDEN</div>
+        <div id="player">
+          <div class="card" id="playerC5">HIDDEN</div>
+          <div class="card" id="playerC4">HIDDEN</div>
+          <div class="card" id="playerC3">HIDDEN</div>
+          <div class="card" id="playerC2">HIDDEN</div>
+          <div class="card" id="playerC1">HIDDEN</div>
 
-        <!-- Value will likely be overwritten using setTextContent() -->
-        <p id="player-total">Total: 0</p>
+          <!-- Value will likely be overwritten using setTextContent() -->
+          <p id="player-total">Total: 0</p>
+        </div>
       </section>
 
       <section id="buttons">
@@ -76,10 +82,9 @@
         <!-- Secondary buttons are only available for certain hands -->
         <button class="secondary-button" id="split-button">SPLIT</button>
         <button class="secondary-button" id="double-button">DOUBLE</button>
-
       </section>
-
-      <aside>
+    </article>
+    <aside id="betting-area">
         <!-- Will display the poker chip image as well as include text representing current winnings -->
         <figure id="winnings"></figure>
         <button class="betting-button" id="bet-100"></button>
@@ -87,8 +92,6 @@
         <button class="betting-button" id="bet-5"></button>
         <button class="betting-button" id="bet-1"></button>
       </aside>
-
-    </article>
   </aside>
   <!--LOAD HELPER SCRIPTS-->
   <script src="binaryHelper.js"></script>

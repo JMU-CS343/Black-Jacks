@@ -62,11 +62,12 @@ nav button {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-direction: row;
   box-sizing: border-box;
 }
 
 /* RIGHT SIDE */
-#game-area > aside {
+#betting-area {
   width: 200px;
   background-color: black;
   border: 1px solid white;
@@ -77,4 +78,9 @@ nav button {
   padding: 10px;
   box-sizing: border-box;
   height: 100%;
+}
+
+#table{
+  background: black;
+
 }
