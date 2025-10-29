@@ -131,7 +131,7 @@ nav button {
   left: 150px;
 }
 
-#dealer-deck {
+.dealer-deck {
   position: relative;
   left: 300px;
   top: -40px;
@@ -142,8 +142,14 @@ nav button {
   border: 2px;
   border-radius: 5px;
   writing-mode: sideways-lr;
-  transition: transform 1s ease-in-out;
   z-index: 10;
+  transition: transform 1s ease-in-out;
+}
+
+.copy {
+  position: absolute;
+  z-index: 20;
+  transition: transform 1s ease-in-out;
 }
 
 #dealer-total{
