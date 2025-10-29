@@ -15,14 +15,21 @@
 
           <!-- Clicking shop brings up this section -->
       <section id="shop">
-        <div class="deck-option" id="deck1">Deck1</div>
-        <div class="deck-option" id="deck2">Deck2</div>
-        <div class="deck-option" id="deck3">Deck3</div>
-        <div class="deck-option" id="deck4">Deck4</div>
-        <div class="deck-option" id="deck5">Deck5</div>
-        <div class="deck-option" id="deck6">Deck6</div>
-        <div class="deck-option" id="deck7">Deck7</div>
-        <div class="deck-option" id="deck8">Deck8</div>
+        <fieldset id="common-container" class="rarityContainer">
+          <legend>$25</legend>
+        </fieldset>
+        <fieldset id="uncommon-container" class="rarityContainer">
+          <legend>$50</legend>
+        </fieldset>
+        <fieldset id="rare-container" class="rarityContainer">
+          <legend>$100</legend>
+        </fieldset>
+        <fieldset id="epic-container" class="rarityContainer">
+          <legend>$250</legend>
+        </fieldset>
+        <fieldset id="legendary-container" class="rarityContainer">
+          <legend>$500</legend>
+        </fieldset>
       </section>
     <!-- 
       Clicking decks brings up this section
@@ -102,6 +109,7 @@
   <script src="binaryHelper.js"></script>
 
   <!--LOAD PRIMARY SCRIPTS-->
+  <script src="shop.js"></script>
   <script src="leaderboard.js"></script>
 
 </body>
