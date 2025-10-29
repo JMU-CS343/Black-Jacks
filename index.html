@@ -93,15 +93,22 @@
         <button class="secondary-button action-button" id="double-button">DOUBLE</button>
       </section>
     </article>
-    <aside id="betting-area">
-        <!-- Will display the poker chip image as well as include text representing current winnings -->
-        <figure id="winnings"></figure>
-        <button class="betting-button" id="bet-100"></button>
-        <button class="betting-button" id="bet-25"></button>
-        <button class="betting-button" id="bet-5"></button>
-        <button class="betting-button" id="bet-1"></button>
-      </aside>
-  </aside>
+    <aside id="leaderboard-area">
+      <div id="earnings-section">
+        <h3>Total Earnings</h3>
+        <p id="total-earnings">$0</p>
+      </div>
+
+      <div id="leaderboard-section">
+        <h3>Leaderboard</h3>
+        <ol id="top-10-list"></ol>
+      </div>
+
+      <div id="rank-section">
+        <h4>Your Rank</h4>
+        <p id="my-rank">Loading...</p>
+      </div>
+    </aside>
   <!-- LOAD ANIMATION SCRIPT -->
   <script src="animation.js"></script>
 
