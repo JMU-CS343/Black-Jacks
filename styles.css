@@ -17,15 +17,12 @@ aside {
   display: flex;
   flex-direction: row;
   width: 1350px;                 
-  /* sets width */
   height: 700px;                 
-  /* sets height */
-  /* border: 2px solid black; */
   background-color: black;
   box-sizing: border-box;
 }
 
-nav {
+#deck-area {
   width: 200px;
   background-color: black;
   border: 1px solid white;
@@ -36,7 +33,7 @@ nav {
   box-sizing: border-box;
 }
 
-nav ul {
+#deck-area ul {
   list-style: none;
   padding: 0;
   margin: 0 0 15px 0;
@@ -46,7 +43,7 @@ nav ul {
   gap: 10px;
 }
 
-nav button {
+li > button {
   width: 90px;
   height: 40px;
   background-color: #FFD966;
@@ -154,7 +151,7 @@ nav button {
 
 #dealer-total{
   position: absolute;
-  top: 10px;
+  top: 15px;
   left: 130px;
   width: 8vw;
 }
