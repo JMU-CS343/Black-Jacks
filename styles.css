@@ -85,64 +85,80 @@ li > button {
   position: relative;
 }
 
+/* When custom decks implimented, change background color here */
 .card{
   height: 11vh;
   width: 4vw;
   border: 2px;
   border-radius: 5px;
   background-color: blue;
+  position: relative;
 }
 
-.ace{
-
+/* When custom decks implimented, change font/color here */
+.card::before {
+  position: absolute;
+  top: 3%;
+  left: 3%;
 }
 
-.two{
-
+.card::after {
+  position: absolute;
+  top: 75%;
+  left: 75%;
+  transform: rotate(180deg);
 }
 
-.three{
-
+.ace::before, .ace::after {
+  content: "A";
 }
 
-.four {
-
+.two::before, .two::after {
+  content: "2";
 }
 
-.five {
-
+.three::before, .three::after{
+  content: "3";
 }
 
-.six {
-
+.four::before, .four::after{
+  content: "4";
 }
 
-.seven {
-
+.five::before, .five::after{
+  content: "5";
 }
 
-.eight {
-
+.six::before, .six::after{
+  content: "6";
 }
 
-.nine {
-
+.seven::before, .seven::after{
+  content: "7";
 }
 
-.ten {
-
+.eight::before, .eight::after{
+  content: "3";
 }
 
-.jack {
-
+.nine::before, .nine::after{
+  content: "9";
 }
 
-.queen {
-
+.ten::before, .ten::after{
+  content: "10";
 }
 
-.king {
+.jack::before, .jack::after{
+  content: "J";
+}
 
+.queen::before, .queen::after{
+  content: "Q";
+}
+
+.king::before, .king::after{
+  content: "K";
 }
 
 #dealerC5 {
