@@ -414,37 +414,30 @@ legend {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 15px;
-  gap: 15px;
+  padding: 10px;
+  gap: 20px;
   box-sizing: border-box;
   height: 100%;
 }
 
-#earnings-section {
+#earnings-section,
+#leaderboard-section,
+#rank-section,
+#daily-section {
   width: 100%;
   border: 3px solid white;
   border-radius: 10px;
   padding: 10px;
   box-sizing: border-box;
-  background-color: #111;
+  background-color: black;
 }
 
-#leaderboard-section {
-  width: 100%;
-  border: 3px solid white;
-  border-radius: 10px;
-  padding: 10px;
-  box-sizing: border-box;
-  background-color: #111;
-}
-
-#rank-section {
-  width: 100%;
-  border: 3px solid white;
-  border-radius: 10px;
-  padding: 10px;
-  box-sizing: border-box;
-  background-color: #111;
+#rank-section,
+#daily-section {
+  min-height: 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 #leaderboard-section {
@@ -455,14 +448,6 @@ legend {
 #leaderboard-area h3 {
   margin: 0 0 10px 0;
   text-align: center;
-  border-bottom: none;
-  font-size: 1.1em;
-}
-
-#leaderboard-area h4 {
-  margin: 0 0 10px 0;
-  text-align: center;
-  border-bottom: none;
   font-size: 1.1em;
 }
 
@@ -479,11 +464,8 @@ legend {
   padding-left: 5px;
 }
 
-#total-earnings {
-  text-align: center;
-  font-weight: bold;
-}
-#my-rank {
+#total-earnings,
+#my-rank, #streak-count {
   text-align: center;
   font-weight: bold;
 }
