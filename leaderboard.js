@@ -1,6 +1,8 @@
 const TOKEN = "dqhzyddctffje";
 const SCORE_ID = "144730";
 const DECK_ID = "144731";
+const DAY_ID = "146045";
+const STREAK_ID = "146046";
 const id = localStorage.getItem("id");
 
 function getBoardData() {
@@ -121,7 +123,9 @@ function getInitalData() {
                 let parsedPlayer = {
                     name: player.name,
                     score: player.scores[SCORE_ID].score,
-                    decks: player.scores[DECK_ID].score
+                    decks: player.scores[DECK_ID].score,
+                    streak: player.scores[STREAK_ID].score,
+                    day: player.scores[DAY_ID].score
                 }
                 return parsedPlayer;
             }
@@ -170,6 +174,78 @@ function clearId() {
 
 function setId(id) {
     localStorage.setItem("id", id);
+}
+
+function getStreak() {
+    if (id == undefined) {
+        return "Player Setup";
+    }
+    return getBoardData().then(data => {
+        for (let i = 0; i < data.players.length; i++) {
+            const player = data.players[i];
+            if (player.id == id) {
+                return player.scores[STREAK_ID].score;
+            }
+        }
+        console.error("ID not found in leaderboard service");
+        return;
+    });
+}
+
+function setStreak(valToSet) {
+    if (id == undefined) {
+        console.error("Player not yet initialized");
+        return;
+    }
+    fetch(`https://leaderboarded.com/api/${TOKEN}/multiscore/`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            column_id: STREAK_ID,
+            player_id: `${id}`,
+            score: valToSet,
+            operation: "set"
+        }),
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+function getDay() {
+    if (id == undefined) {
+        return "Player Setup";
+    }
+    return getBoardData().then(data => {
+        for (let i = 0; i < data.players.length; i++) {
+            const player = data.players[i];
+            if (player.id == id) {
+                return player.scores[STREAK_ID].score;
+            }
+        }
+        console.error("ID not found in leaderboard service");
+        return;
+    });
+}
+
+function setDay(valToSet) {
+    if (id == undefined) {
+        console.error("Player not yet initialized");
+        return;
+    }
+    fetch(`https://leaderboarded.com/api/${TOKEN}/multiscore/`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            column_id: DAY_ID,
+            player_id: `${id}`,
+            score: valToSet,
+            operation: "set"
+        }),
+    })
+    .catch(error => console.error('Error:', error));
 }
 
 document.addEventListener("DOMContentLoaded", () => {

@@ -202,3 +202,25 @@ function handleShopClick(id, title, rarity, index) {
     document.body.appendChild(blur);
     document.body.appendChild(popup);
 }
+
+function showShop() {
+    console.log("Show shop");
+}
+
+function showDecks() {
+    shopInit();
+    console.log("Show decks");
+}
+
+const shopButton = document.getElementById("shop-button-controller");
+shopButton.addEventListener("click", () => {
+    if (shopButton.classList.contains("selected")) {
+        return;
+    }
+    showShop();
+});
+
+const deckButton = document.getElementById("deck-button-controller");
+deckButton.addEventListener("click", () => {
+    
+});
