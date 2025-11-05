@@ -131,7 +131,7 @@ nav button {
   left: 150px;
 }
 
-#dealer-deck {
+.dealer-deck {
   position: relative;
   left: 300px;
   top: -40px;
@@ -142,8 +142,14 @@ nav button {
   border: 2px;
   border-radius: 5px;
   writing-mode: sideways-lr;
-  transition: transform 1s ease-in-out;
   z-index: 10;
+  transition: transform 1s ease-in-out;
+}
+
+.copy {
+  position: absolute;
+  z-index: 20;
+  transition: transform 1s ease-in-out;
 }
 
 #dealer-total{
@@ -401,6 +407,160 @@ nav button {
 
 legend {
   text-align: center;
+}
+
+#leaderboard-area {
+  width: 220px;
+  background-color: black;
+  color: white;
+  border: 1px solid white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  gap: 20px;
+  box-sizing: border-box;
+  height: 100%;
+}
+
+#earnings-section,
+#leaderboard-section,
+#rank-section,
+#daily-section {
+  width: 100%;
+  border: 3px solid white;
+  border-radius: 10px;
+  padding: 10px;
+  box-sizing: border-box;
+  background-color: black;
+}
+
+#rank-section,
+#daily-section {
+  min-height: 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#leaderboard-section {
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
+#leaderboard-area h3 {
+  margin: 0 0 10px 0;
+  text-align: center;
+  font-size: 1.1em;
+}
+
+#top-10-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  text-align: left;
+  width: 100%;
+}
+
+#top-10-list li {
+  margin: 3px 0;
+  padding-left: 5px;
+}
+
+#total-earnings,
+#my-rank, #streak-count {
+  text-align: center;
+  font-weight: bold;
+}
+
+#top-nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: black;
+  border-bottom: 2px solid white;
+  border-top: 2px solid white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 6px 0;
+  z-index: 1000;
+}
+
+#top-nav nav {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  gap: 50px;
+  white-space: nowrap;
+  width: 100%;
+  max-width: 800px;
+}
+
+#top-nav .nav-link {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1.00rem;
+}
+
+body {
+  padding-top: 50px;
+}
+
+.Visual-page main {
+  max-height: calc(100vh - 50px);
+  overflow-y: auto;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.image-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.image-grid section {
+  flex: 1 1 45%;
+  flex-direction: column;
+  align-items: center;
+}
+
+.image-grid section h2 {
+  color: black;
+  border: 3px solid black;
+  padding: 2px 2px;
+  border-radius: 3px;
+  text-align: center;
+  background-color: #F0EAD6;
+}
+
+.image-grid img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.learn-page main {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+
+.knowledge {
+  max-width: 600px; 
+  max-height: 700px;
+  width: 90%;
+  padding: 20px;
+  border-radius: 8px;
+  color: black;
+  border: 3px solid black;
+  font-size: 0.8rem;
+  background-color: #F0EAD6;
 }
 
 .popup {

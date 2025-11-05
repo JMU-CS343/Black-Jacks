@@ -131,6 +131,39 @@ function getInitalData() {
     });
 }
 
+// THIS IS THE LEADERBOARD DISPLAYER
+function displayer() {
+  getBoardData().then(data => {
+    const total = document.getElementById("total-earnings");
+    const leader = document.getElementById("top-10-list");
+    const myrank = document.getElementById("my-rank");
+    const playerId = localStorage.getItem("id");
+
+    leader.innerHTML = "";
+
+    const sortedPlayers = [...data.players].sort(
+      (a, b) => b.scores[SCORE_ID].score - a.scores[SCORE_ID].score
+    );
+
+    sortedPlayers.slice(0, 10).forEach((player, index) => {
+      const li = document.createElement("li");
+      li.textContent = `${index + 1}. ${player.name} — $${player.scores[SCORE_ID].score}`;
+      leader.appendChild(li);
+    });
+
+    const rank = sortedPlayers.findIndex(p => p.id == playerId) + 1;
+    const me = sortedPlayers.find(p => p.id == playerId);
+
+    if (me) {
+      total.textContent = `$${me.scores[SCORE_ID].score}`;
+      myrank.textContent = `You are currently ranked #${rank} with $${me.scores[SCORE_ID].score}`;
+    } else {
+      total.textContent = "$0";
+      myrank.textContent = "";
+    }
+  })
+}
+
 function clearId() {
     localStorage.removeItem("id");
 }
@@ -138,3 +171,7 @@ function clearId() {
 function setId(id) {
     localStorage.setItem("id", id);
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+  displayer();
+});
