@@ -688,3 +688,7 @@ body {
   font-size: 15px;
   text-align: center;
 }
+
+button.inverse {
+  filter: invert(1);
+}
