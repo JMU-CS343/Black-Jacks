@@ -16,7 +16,7 @@ const shuffleDeck = async () => {
 
     // Get the json object from the request
     const data = await response.json();
-    deckId = data.deckId;
+    deckId = data.deck_id;
   }
   catch (error) {
     console.error("Failed to shuffle the deck: ", error.message);
@@ -37,15 +37,16 @@ const drawCard = async () => {
   }
 
   try{
-    const response = await fetch('https://deckofcardsapi.com/api/deck/${deckId}/draw/');
+    const response = await fetch(`https://deckofcardsapi.com/api/deck/${deckId}/draw/`);
 
     if (!response.ok){
       throw new Error("Failed to draw a card");
     }
     
     const data = await response.json();
-    const value = data.cards.value;
-    const suit = data.cards.suit;
+    const card = data.cards[0]
+    const value = card.value;
+    const suit = card.suit;
     rem = data.remaining;
     return([value, suit]);
   }

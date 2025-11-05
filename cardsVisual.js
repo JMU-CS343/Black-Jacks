@@ -1,17 +1,16 @@
-// EVENTUALLY CHANGE VW/VH TO %
 let testCard = document.getElementById("playerC1");
 
+// This may be useless
 function setupCard(card){
-  ace(card);
+  // ace(testCard, "HEARTS");
 }
 
-// Have all of these return the imgs array for future use
 function ace(card, suitStr){
   let imgs = [];
   let img1 = document.createElement("img");
   imgs.push(img1);
   card.appendChild(imgs[0]);
-  img1.style.paddingTop = '3vh';
+  img1.style.paddingTop = '29%';
   img1.style.width = '75%';
   suitHelper(imgs, suitStr);
 }
@@ -25,7 +24,7 @@ function two(card, suitStr){
 
   for (let img of imgs){
     card.appendChild(img);
-    img.style.paddingTop = '1vh';
+    img.style.paddingTop = '9%';
     img.style.width = '55%';
   }
   suitHelper(imgs, suitStr);
@@ -42,10 +41,10 @@ function three(card, suitStr){
 
   for (let img of imgs){
     card.appendChild(img);
-    img.style.paddingTop = '.2vh';
-    img.style.paddingLeft = '.5vw';
-    img.style.paddingRight = '.5vw';
-    img.style.width = '43%';
+    img.style.paddingTop = '3%';
+    img.style.paddingLeft = '8%';
+    img.style.paddingRight = '8%';
+    img.style.width = '38%';
   }
   suitHelper(imgs, suitStr);
 }
@@ -63,9 +62,9 @@ function four(card, suitStr){
 
   for (let img of imgs){
     card.appendChild(img);
-    img.style.paddingTop = '2vh';
-    img.style.paddingLeft = '.2vw';
-    img.style.paddingRight = '.2vw';
+    img.style.paddingTop = '24%';
+    img.style.paddingLeft = '8%';
+    img.style.paddingRight = '8%';
     img.style.width = '30%';
   }
   suitHelper(imgs, suitStr);
@@ -86,9 +85,9 @@ function five(card, suitStr){
 
   for (let img of imgs){
     card.appendChild(img);
-    img.style.paddingTop = '1vh';
-    img.style.paddingLeft = '.2vw';
-    img.style.paddingRight = '.2vw';
+    img.style.paddingTop = '11%';
+    img.style.paddingLeft = '3%';
+    img.style.paddingRight = '3%';
     img.style.width = '28%';
   }
   suitHelper(imgs, suitStr);
@@ -111,9 +110,9 @@ function six(card, suitStr){
 
   for (let img of imgs){
     card.appendChild(img);
-    img.style.paddingTop = '1vh';
-    img.style.paddingLeft = '.3vw';
-    img.style.paddingRight = '.3vw';
+    img.style.paddingTop = '13%';
+    img.style.paddingLeft = '6%';
+    img.style.paddingRight = '6%';
     img.style.width = '25%';
   }
   suitHelper(imgs, suitStr);
@@ -138,10 +137,10 @@ function seven(card, suitStr){
 
   for (let img of imgs){
     card.appendChild(img);
-    img.style.paddingTop = '.8vh';
-    img.style.paddingLeft = '.3vw';
-    img.style.paddingRight = '.3vw';
-    img.style.width = '20%';
+    img.style.paddingTop = '8%';
+    img.style.paddingLeft = '7%';
+    img.style.paddingRight = '7%';
+    img.style.width = '21%';
   }
   suitHelper(imgs, suitStr);
 }
@@ -167,9 +166,9 @@ function eight(card, suitStr){
 
   for (let img of imgs){
     card.appendChild(img);
-    img.style.paddingTop = '.8vh';
-    img.style.paddingLeft = '.3vw';
-    img.style.paddingRight = '.3vw';
+    img.style.paddingTop = '8%';
+    img.style.paddingLeft = '8%';
+    img.style.paddingRight = '8%';
     img.style.width = '20%';
   }
   suitHelper(imgs, suitStr);
@@ -198,10 +197,10 @@ function nine(card, suitStr){
 
   for (let img of imgs){
     card.appendChild(img);
-    img.style.paddingTop = '.2vh';
-    img.style.paddingLeft = '.3vw';
-    img.style.paddingRight = '.3vw';
-    img.style.width = '19%';
+    img.style.paddingTop = '0%';
+    img.style.paddingLeft = '9%';
+    img.style.paddingRight = '9%';
+    img.style.width = '20%';
   }
   // Need space above cards, alignment unclean otherwise
   img2.style.paddingTop = '.7vh';
@@ -233,30 +232,30 @@ function ten(card, suitStr){
 
   for (let img of imgs){
     card.appendChild(img);
-    img.style.paddingTop = '.4vh';
+    img.style.paddingTop = '2%';
     img.style.width = '19%';
   }
   // Double digits require special alignment
   // Maybe shrink letter spacing
-  img1.style.paddingLeft = '.8vw';
-  img1.style.paddingRight = '.2vw';
-  img2.style.paddingRight = '.7vw';
+  img1.style.paddingLeft = '20%';
+  img1.style.paddingRight = '5%';
+  img2.style.paddingRight = '19%';
 
-  img3.style.paddingLeft = '.8vw';
-  img3.style.paddingRight = '.2vw';
-  img4.style.paddingRight = '.8vw';
+  img3.style.paddingLeft = '20%';
+  img3.style.paddingRight = '5%';
+  img4.style.paddingRight = '19%';
 
-  img5.style.paddingLeft = '.8vw';
-  img5.style.paddingRight = '.2vw';
-  img6.style.paddingRight = '.8vw';
+  img5.style.paddingLeft = '20%';
+  img5.style.paddingRight = '5%';
+  img6.style.paddingRight = '19%';
 
-  img7.style.paddingLeft = '.8vw';
-  img7.style.paddingRight = '.2vw';
-  img8.style.paddingRight = '.8vw';
+  img7.style.paddingLeft = '20%';
+  img7.style.paddingRight = '5%';
+  img8.style.paddingRight = '19%';
 
-  img9.style.paddingLeft = '.8vw';
-  img9.style.paddingRight = '.2vw';
-  img10.style.paddingRight = '.8vw';
+  img9.style.paddingLeft = '20%';
+  img9.style.paddingRight = '5%';
+  img10.style.paddingRight = '19%';
   suitHelper(imgs, suitStr);
 }
 
@@ -265,16 +264,16 @@ function ten(card, suitStr){
 function suitHelper(imgs, suitStr){
   switch (suitStr){
     case "SPADES":
-      spades(imgs);
+      spade(imgs);
       break;
     case "DIAMONDS":
-      diamonds(imgs);
+      diamond(imgs);
       break;
     case "HEARTS":
-      hearts(imgs);
+      heart(imgs);
       break;
     case "CLUBS":
-      clubs(imgs);
+      club(imgs);
       break;
   }
 }
