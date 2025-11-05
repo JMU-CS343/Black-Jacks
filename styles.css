@@ -692,3 +692,7 @@ body {
 button.inverse {
   filter: invert(1);
 }
+
+.selected {
+  background-color: #c69d0b;
+}
