@@ -89,7 +89,7 @@ li > button {
 .card{
   height: 11vh;
   width: 4vw;
-  border: 2px;
+  border: 1px solid white;
   border-radius: 5px;
   background-color: blue;
   position: relative;
@@ -104,8 +104,8 @@ li > button {
 
 .card::after {
   position: absolute;
-  top: 75%;
-  left: 75%;
+  top: 80%;
+  left: 83%;
   transform: rotate(180deg);
 }
 
@@ -131,6 +131,7 @@ li > button {
 
 .six::before, .six::after{
   content: "6";
+  text-decoration: underline;
 }
 
 .seven::before, .seven::after{
@@ -138,15 +139,21 @@ li > button {
 }
 
 .eight::before, .eight::after{
-  content: "3";
+  content: "8";
 }
 
 .nine::before, .nine::after{
   content: "9";
+  text-decoration: underline;
 }
 
 .ten::before, .ten::after{
   content: "10";
+}
+
+/* Double digit num needs special alignment */
+.ten::after{
+  left: 75%;
 }
 
 .jack::before, .jack::after{
@@ -185,7 +192,6 @@ li > button {
   left: 50px;
   height: 11vh;
   width: 4vw;
-  border: 2px;
   border-radius: 5px;
   background-color: blue;
 }
