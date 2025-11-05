@@ -114,7 +114,7 @@ function getInitalData() {
     if (id == undefined) {
         return "Player Setup";
     }
-    getBoardData().then(data => {
+    return getBoardData().then(data => {
         for (let i = 0; i < data.players.length; i++) {
             const player = data.players[i];
             if (player.id == id) {

@@ -341,6 +341,9 @@ nav button {
   background-color: white;
   border-radius: 5px;
   margin: 0px;
+  color: black;
+  text-align: center;
+  justify-content: center;
 }
 
 .common {
@@ -397,5 +400,60 @@ nav button {
 }
 
 legend {
+  text-align: center;
+}
+
+.popup {
+  position: fixed; 
+  width: 500px; 
+  height: 500px; 
+  margin: auto; 
+  background-color: rgb(194, 217, 255); 
+  border: 5px solid black; 
+  border-radius: 15px; 
+  display: flex; 
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 20;
+}
+
+.popupTitle {
+  font-size: 25px;
+  color: black;
+  margin-bottom: 30px;
+}
+
+.blur {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
+  z-index: 15;
+}
+
+.popupButton {
+  width: 70px;
+  height: 35px;
+  border-radius: 5px;
+  font-size: 15px;
+}
+
+.affirm:hover {
+  background-color: green;
+}
+
+.decline:hover {
+  background-color: red;
+}
+
+.errorMessage {
+  color: red;
+  width: 100px;
+  height: 20px;
+  font-size: 15px;
   text-align: center;
 }
