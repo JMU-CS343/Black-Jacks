@@ -5,17 +5,18 @@ function setupCard(card){
   ace(card);
 }
 
-function ace(card){
+// Have all of these return the imgs array for future use
+function ace(card, suitStr){
   let imgs = [];
   let img1 = document.createElement("img");
   imgs.push(img1);
   card.appendChild(imgs[0]);
   img1.style.paddingTop = '3vh';
   img1.style.width = '75%';
-  heart(imgs);
+  suitHelper(imgs, suitStr);
 }
 
-function two(card){
+function two(card, suitStr){
   let imgs = [];
   let img1 = document.createElement("img");
   imgs.push(img1);
@@ -27,9 +28,10 @@ function two(card){
     img.style.paddingTop = '1vh';
     img.style.width = '55%';
   }
+  suitHelper(imgs, suitStr);
 }
 
-function three(card){
+function three(card, suitStr){
   let imgs = [];
   let img1 = document.createElement("img");
   imgs.push(img1);
@@ -45,9 +47,10 @@ function three(card){
     img.style.paddingRight = '.5vw';
     img.style.width = '43%';
   }
+  suitHelper(imgs, suitStr);
 }
 
-function four(card){
+function four(card, suitStr){
   let imgs = [];
   let img1 = document.createElement("img");
   imgs.push(img1);
@@ -65,9 +68,10 @@ function four(card){
     img.style.paddingRight = '.2vw';
     img.style.width = '30%';
   }
+  suitHelper(imgs, suitStr);
 }
 
-function five(card){
+function five(card, suitStr){
   let imgs = [];
   let img1 = document.createElement("img");
   imgs.push(img1);
@@ -87,9 +91,10 @@ function five(card){
     img.style.paddingRight = '.2vw';
     img.style.width = '28%';
   }
+  suitHelper(imgs, suitStr);
 }
 
-function six(card){
+function six(card, suitStr){
   let imgs = [];
   let img1 = document.createElement("img");
   imgs.push(img1);
@@ -111,9 +116,10 @@ function six(card){
     img.style.paddingRight = '.3vw';
     img.style.width = '25%';
   }
+  suitHelper(imgs, suitStr);
 }
 
-function seven(card){
+function seven(card, suitStr){
   let imgs = [];
   let img1 = document.createElement("img");
   imgs.push(img1);
@@ -137,9 +143,10 @@ function seven(card){
     img.style.paddingRight = '.3vw';
     img.style.width = '20%';
   }
+  suitHelper(imgs, suitStr);
 }
 
-function eight(card){
+function eight(card, suitStr){
   let imgs = [];
   let img1 = document.createElement("img");
   imgs.push(img1);
@@ -165,9 +172,10 @@ function eight(card){
     img.style.paddingRight = '.3vw';
     img.style.width = '20%';
   }
+  suitHelper(imgs, suitStr);
 }
 
-function nine(card){
+function nine(card, suitStr){
   let imgs = [];
   let img1 = document.createElement("img");
   imgs.push(img1);
@@ -197,9 +205,10 @@ function nine(card){
   }
   // Need space above cards, alignment unclean otherwise
   img2.style.paddingTop = '.7vh';
+  suitHelper(imgs, suitStr);
 }
 
-function ten(card){
+function ten(card, suitStr){
   let imgs = [];
   let img1 = document.createElement("img");
   imgs.push(img1);
@@ -248,6 +257,26 @@ function ten(card){
   img9.style.paddingLeft = '.8vw';
   img9.style.paddingRight = '.2vw';
   img10.style.paddingRight = '.8vw';
+  suitHelper(imgs, suitStr);
+}
+
+// Need funcs for jack king queen
+
+function suitHelper(imgs, suitStr){
+  switch (suitStr){
+    case "SPADES":
+      spades(imgs);
+      break;
+    case "DIAMONDS":
+      diamonds(imgs);
+      break;
+    case "HEARTS":
+      hearts(imgs);
+      break;
+    case "CLUBS":
+      clubs(imgs);
+      break;
+  }
 }
 
 function heart(imgs){
@@ -275,4 +304,5 @@ function club(imgs){
   }
 }
 
+// Delete later
 setupCard(testCard);

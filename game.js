@@ -7,6 +7,7 @@ function init() {
         deckValue = data.decks;
         shopInit();
     });
+    shuffleDeck();
 }
 init();
 
@@ -23,3 +24,20 @@ function handleBuy(index, cost) {
     }
     return false;
 }
+
+let target = document.getElementById("playerC1");
+let deal = document.getElementById("deal-button");
+deal.addEventListener("click", () => {
+  let cardInfo = drawCard();
+  let number = cardInfo[0];
+  let suit = cardInfo[1];
+
+  switch (number) {
+    case "ACE":
+      target.classList.add("ace");
+      break;
+    case "2":
+      target.classList.add("two");
+      break;
+  }
+});
