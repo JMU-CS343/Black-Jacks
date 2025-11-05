@@ -26,19 +26,14 @@
           <!-- Clicking shop brings up this section -->
       <section id="shop">
         <fieldset id="common-container" class="rarityContainer">
-          <legend>$25</legend>
         </fieldset>
         <fieldset id="uncommon-container" class="rarityContainer">
-          <legend>$50</legend>
         </fieldset>
         <fieldset id="rare-container" class="rarityContainer">
-          <legend>$100</legend>
         </fieldset>
         <fieldset id="epic-container" class="rarityContainer">
-          <legend>$250</legend>
         </fieldset>
         <fieldset id="legendary-container" class="rarityContainer">
-          <legend>$500</legend>
         </fieldset>
       </section>
     <!-- 
@@ -115,8 +110,13 @@
       </div>
 
       <div id="rank-section">
-        <h4>Your Rank</h4>
+        <h3>Your Rank</h3>
         <p id="my-rank">Loading...</p>
+      </div>
+
+      <div id="daily-section">
+        <h3>Daily Streak</h3>
+        <p id="streak-count"></p>
       </div>
     </aside>
   </aside>
@@ -131,6 +131,8 @@
   <!--LOAD PRIMARY SCRIPTS-->
   <script src="shop.js"></script>
   <script src="leaderboard.js"></script>
+  <script src="game.js"></script>
 
+  <script src="shortcut.js"></script>
 </body>
 </html>
