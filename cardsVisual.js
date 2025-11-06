@@ -2,9 +2,14 @@ let testCard = document.getElementById("playerC1");
 
 // This may be useless
 function setupCard(card){
+  // faceHelper(testCard, "KING", "CLUBS");
   // ace(testCard, "HEARTS");
 }
 
+// DOCUMENTATION FOR ALL CARD FUNCS:
+// Create an array of img elems with length being the card number
+// Add number images to the array so they can be looped over
+// and added as childeren to the card div, editing style as necessary
 function ace(card, suitStr){
   let imgs = [];
   let img1 = document.createElement("img");
@@ -26,6 +31,9 @@ function two(card, suitStr){
     card.appendChild(img);
     img.style.paddingTop = '9%';
     img.style.width = '55%';
+    // need to rename all card imgs but could replace helper methods
+    // would remove need for suit helper and suit methods
+    // img.src = `card_imgs/${suitStr}`
   }
   suitHelper(imgs, suitStr);
 }
@@ -259,7 +267,17 @@ function ten(card, suitStr){
   suitHelper(imgs, suitStr);
 }
 
-// Need funcs for jack king queen
+// Set the card's image to the corresponding face card
+// image files named to match api return strings
+function faceHelper(card, cardStr, suitStr) {
+  let img = document.createElement("img");
+  card.appendChild(img);
+  img.src = `card_imgs/${cardStr}${suitStr}.png`;
+  img.style.width = '70%';
+  img.style.paddingTop = "9%";
+  img.style.paddingLeft = "9%";
+  img.style.paddingRight = "9%";
+}
 
 function suitHelper(imgs, suitStr){
   switch (suitStr){
@@ -290,7 +308,6 @@ function diamond(imgs){
   }
 }
 
-// need new spade image
 function spade(imgs){
   for (let img of imgs){
     img.src = "card_imgs/spade.png";

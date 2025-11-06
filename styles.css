@@ -89,20 +89,23 @@ li > button {
 .card{
   height: 11vh;
   width: 4vw;
-  border: 1px solid white;
+  border: 1px solid black;
   border-radius: 5px;
-  background-color: blue;
+  background-color: white;
+  color: black;
   position: relative;
 }
 
 /* When custom decks implimented, change font/color here */
 .card::before {
+  color: black;
   position: absolute;
   top: 3%;
   left: 3%;
 }
 
 .card::after {
+  color: black;
   position: absolute;
   top: 80%;
   left: 83%;
@@ -164,6 +167,11 @@ li > button {
   content: "Q";
 }
 
+/* Q is large, special alignment */
+.queen::before{
+  left: 1%;
+}
+
 .king::before, .king::after{
   content: "K";
 }
@@ -193,7 +201,7 @@ li > button {
   height: 11vh;
   width: 4vw;
   border-radius: 5px;
-  background-color: blue;
+  background-color: white;
 }
 
 #dealerC1 {

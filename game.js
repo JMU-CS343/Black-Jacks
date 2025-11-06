@@ -85,17 +85,17 @@ gameDeal.addEventListener("click", async () => {
       playerCard.classList.add("ten");
       ten(playerCard, suit);
       break;
-    // case "JACK":
-    //   playerCard.classList.add("jack");
-    //   jack(playerCard, suit);
-    //   break;
-    // case "QUEEN":
-    //   playerCard.classList.add("queen");
-    //   queen(playerCard, suit);
-    //   break;
-    // case "KING":
-    //   playerCard.classList.add("king");
-    //   king(playerCard, suit);
-    //   break;
+    case "JACK":
+      playerCard.classList.add("jack");
+      faceHelper(playerCard, number, suit)
+      break;
+    case "QUEEN":
+      playerCard.classList.add("queen");
+      faceHelper(playerCard, number, suit)
+      break;
+    case "KING":
+      playerCard.classList.add("king");
+      faceHelper(playerCard, number, suit);
+      break;
   }
 });
