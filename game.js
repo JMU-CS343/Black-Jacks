@@ -33,9 +33,18 @@ function wait(ms) {
 let playerCard = document.getElementById("playerC1");
 let gameDeal = document.getElementById("deal-button");
 
+// Prevents spanning deal from continuously adding images
+let isDealt = false;
+
 // Need async since calling asynchronous functions right now
 // Call deck functions as if they were synchronous using await
 gameDeal.addEventListener("click", async () => {
+  // Replace this with actual logic
+  if (isDealt) {
+    return;
+  }
+  isDealt = true;
+
   await shuffleDeck();
   let cardInfo = await drawCard();
   let number = cardInfo[0];
