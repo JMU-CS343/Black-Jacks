@@ -6,12 +6,14 @@ const double = document.getElementById("double-button");
 
 let deckId = null;
 let rem = null;
+
+// Add balloons that pop up when there is an API error
 const shuffleDeck = async () => {
   try {
     const response = await fetch('https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=2');
 
     if(!response.ok){
-      throw new Error("Failed to fetch a deck");
+      throw new Error("API failed to fetch a deck");
     }
 
     // Get the json object from the request
@@ -19,7 +21,7 @@ const shuffleDeck = async () => {
     deckId = data.deck_id;
   }
   catch (error) {
-    console.error("Failed to shuffle the deck: ", error.message);
+    alert(`Failed to shuffle the deck: ${error.message}`);
   }
 };
 
@@ -40,7 +42,7 @@ const drawCard = async () => {
     const response = await fetch(`https://deckofcardsapi.com/api/deck/${deckId}/draw/`);
 
     if (!response.ok){
-      throw new Error("Failed to draw a card");
+      throw new Error("API failed to draw a card");
     }
     
     const data = await response.json();
@@ -51,6 +53,6 @@ const drawCard = async () => {
     return([value, suit]);
   }
   catch (error) {
-    console.error("Failed to deal a card: ", error.message);
+    alert(`Failed to deal a card: ${error.message}`);
   }
 }
