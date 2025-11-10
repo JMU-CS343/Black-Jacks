@@ -210,6 +210,7 @@ let hitButton = document.getElementById("hit-button");
 hitButton.addEventListener("click", imageUpload);
 
 // Need to fix up the css
+// Need to add a cancel button
 function imageUpload(){
   const blur = document.createElement("div");
   blur.setAttribute("class", "blur");
@@ -250,6 +251,9 @@ function imageUpload(){
   const confirm = document.createElement("button");
   confirm.textContent = "Confirm";
   confirm.disabled = true;
+
+  let imageUploaded = false;
+  let deckNamed = false;
   
   imageInput.addEventListener('change', function() {
     const file = this.files[0];
@@ -259,10 +263,20 @@ function imageUpload(){
         uploaded.src = e.target.result;
       }
       reader.readAsDataURL(file);
-      confirm.disabled = false;
+      imageUploaded = true;
+      if (deckNamed) {
+        confirm.disabled = false;
+      }
     }
     else {
       uploaded.src = 'https://placehold.co/50x50/e0e0e0/777?text=Image+Preview';
+    }
+  });
+
+  deckName.addEventListener("change", () => {
+    deckNamed = true;
+    if (imageUploaded) {
+      confirm.disabled = false;
     }
   });
 
@@ -271,6 +285,7 @@ function imageUpload(){
   confirm.addEventListener("click", () => {
     document.body.removeChild(blur);
     document.body.removeChild(popup);
+    document.removeEventListener('keydown', stopKeyEvent, { capture: true });
   });
   
   popup.appendChild(imageLabel);
@@ -281,6 +296,11 @@ function imageUpload(){
   
   document.body.appendChild(blur);
   document.body.appendChild(popup);
+  document.addEventListener('keydown', stopKeyEvent, { capture: true });
+}
+
+function stopKeyEvent(e){
+  e.stopPropagation();
 }
 
 function showShop() {

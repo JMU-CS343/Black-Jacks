@@ -1,5 +1,5 @@
 document.addEventListener("keydown", (event) => {
-  if (event.altKey) {
+  if (event.altKey || event.ctrlKey) {
 
     switch (event.key) {
       case "1":
