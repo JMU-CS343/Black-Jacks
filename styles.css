@@ -696,3 +696,7 @@ button.inverse {
 .selected {
   background-color: #c69d0b;
 }
+
+.selectedDeck {
+  border: solid rgb(0, 255, 247) 5px;
+}

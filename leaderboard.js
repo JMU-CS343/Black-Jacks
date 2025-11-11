@@ -3,7 +3,7 @@ const SCORE_ID = "144730";
 const DECK_ID = "144731";
 const DAY_ID = "146045";
 const STREAK_ID = "146046";
-const id = localStorage.getItem("id");
+let id = localStorage.getItem("id");
 
 function getBoardData() {
     return fetch(`https://leaderboarded.com/api/${TOKEN}/board/`)
@@ -41,6 +41,8 @@ function addPlayer(name) {
     .then(response => response.json())
     .then(data => {
         localStorage.setItem("id", data.player.id);
+        id = localStorage.getItem("id");
+        setDeckScore(1);
     })
     .catch(error => console.error('Error:', error));
 }
@@ -66,6 +68,7 @@ function setPlayerScore(scoreToSet) {
 }
 
 function setDeckScore(scoreToSet) {
+    console.log("SETTING DECK");
     if (id == undefined) {
         console.error("Player not yet initialized");
         return;
