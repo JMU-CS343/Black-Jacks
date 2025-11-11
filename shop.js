@@ -260,6 +260,86 @@ function handleShopClick(id, title, rarity, index) {
     document.body.appendChild(popup);
 }
 
+// Next two lines strictly for testing,
+// This should be called when the legendary deck
+// is purchased and that deck should be able to be purchased repeatedly
+let hitButton = document.getElementById("hit-button");
+hitButton.addEventListener("click", imageUpload);
+
+// Need to fix up the css
+function imageUpload(){
+  const blur = document.createElement("div");
+  blur.setAttribute("class", "blur");
+
+  const popup = document.createElement("div");
+  popup.setAttribute("class", "popup");
+
+  const imageLabel = document.createElement("label");
+  imageLabel.htmlFor = "image-input";
+  imageLabel.textContent = "Upload a deck image";
+  imageLabel.className = "upload-label"
+
+  const imageInput = document.createElement("input");
+  imageInput.type = "file";
+  imageInput.id = "image-input";
+  imageInput.accept = "image/*";
+
+  const imageContainer = document.createElement("div");
+  imageContainer.className = "upload-container"
+  const uploaded = document.createElement("img");
+  uploaded.className = "upload-preview";
+  uploaded.src = 'https://placehold.co/50x50/e0e0e0/777?text=Image+Preview';
+  imageContainer.appendChild(uploaded);
+
+  const nameContainer = document.createElement("div");
+  nameContainer.id = "deck-name-container";
+  
+  const nameLabel = document.createElement("label");
+  nameLabel.textContent = "Name your deck: ";
+  nameLabel.htmlFor = "deck-name";
+  const deckName = document.createElement("input");
+  deckName.id = "deck-name";
+  deckName.type = "text";
+
+  nameContainer.appendChild(nameLabel);
+  nameContainer.appendChild(deckName);
+  
+  const confirm = document.createElement("button");
+  confirm.textContent = "Confirm";
+  confirm.disabled = true;
+  
+  imageInput.addEventListener('change', function() {
+    const file = this.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        uploaded.src = e.target.result;
+      }
+      reader.readAsDataURL(file);
+      confirm.disabled = false;
+    }
+    else {
+      uploaded.src = 'https://placehold.co/50x50/e0e0e0/777?text=Image+Preview';
+    }
+  });
+
+  // Handle logic for saving the deck here
+  // Maybe create an object with key: deckName and value: uploaded.src
+  confirm.addEventListener("click", () => {
+    document.body.removeChild(blur);
+    document.body.removeChild(popup);
+  });
+  
+  popup.appendChild(imageLabel);
+  popup.appendChild(imageInput);
+  popup.appendChild(imageContainer);
+  popup.appendChild(nameContainer);
+  popup.appendChild(confirm);
+  
+  document.body.appendChild(blur);
+  document.body.appendChild(popup);
+}
+
 const shopButton = document.getElementById("shop-button-controller");
 const deckButton = document.getElementById("deck-button-controller");
 

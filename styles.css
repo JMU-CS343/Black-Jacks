@@ -89,23 +89,26 @@ li > button {
 .card{
   height: 11vh;
   width: 4vw;
-  border: 1px solid white;
+  border: 1px solid black;
   border-radius: 5px;
-  background-color: blue;
+  background-color: white;
+  color: black;
   position: relative;
 }
 
 /* When custom decks implimented, change font/color here */
 .card::before {
+  color: black;
   position: absolute;
   top: 3%;
   left: 3%;
 }
 
 .card::after {
+  color: black;
   position: absolute;
   top: 80%;
-  left: 83%;
+  left: 80%;
   transform: rotate(180deg);
 }
 
@@ -153,7 +156,7 @@ li > button {
 
 /* Double digit num needs special alignment */
 .ten::after{
-  left: 75%;
+  left: 72%;
 }
 
 .jack::before, .jack::after{
@@ -162,6 +165,11 @@ li > button {
 
 .queen::before, .queen::after{
   content: "Q";
+}
+
+/* Q is large, special alignment */
+.queen::before{
+  left: 1%;
 }
 
 .king::before, .king::after{
@@ -193,7 +201,7 @@ li > button {
   height: 11vh;
   width: 4vw;
   border-radius: 5px;
-  background-color: blue;
+  background-color: white;
 }
 
 #dealerC1 {
@@ -695,6 +703,39 @@ button.inverse {
 
 .selected {
   background-color: #c69d0b;
+}
+
+.upload-label {
+  margin-bottom: 1vh;
+  font-size: 1.5vw;
+}
+
+.upload-container {
+  display: flex;
+  justify-content: center;
+
+  height: 44vh;
+  width: 16vw;
+  margin-top: 3vh;
+  margin-bottom: 2vh;
+
+  border: 2px solid black;
+  border-radius: 5px;
+}
+
+.upload-preview {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+#deck-name-container {
+  display: flex;
+  padding-bottom: 2vh;
+}
+
+#deck-name {
+  margin-left: 1vw;
 }
 
 .selectedDeck {
