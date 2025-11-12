@@ -14,6 +14,9 @@ document.addEventListener("keydown", (event) => {
       case "4":
         window.location.href = "profile.html";
         break;
+      case "5":
+        window.location.href = "information.html";
+        break;
     }
 
     // Keeps focus on whatever browser you are on.
