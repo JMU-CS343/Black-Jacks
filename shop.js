@@ -4,6 +4,10 @@ const rares = document.getElementById("rares");
 const legendaries = document.getElementById("legendaries");
 const decks = [
     {
+        "title": "default",
+        "rarity": "common"
+    },
+    {
         "title": "blue",
         "rarity": "common"
     },
@@ -67,6 +71,12 @@ const decks = [
 
 const costs = {"common": "$25", "uncommon": "$50", "rare": "$100", "epic": "$250", "legendary": "$500"};
 
+let selected = localStorage.getItem("selectedDeck");
+if (selected == null) {
+    localStorage.setItem("selectedDeck", "1");
+    selected = "1";
+}
+
 let purchased = [];
 
 function shopInit() {
@@ -81,7 +91,7 @@ function shopInit() {
 
     const binString = intToBin(deckValue);
     if (binString !== "0") {
-        for (let i = binString.length; i > 0; i--) {
+        for (let i = 0; i < binString.length; i++) {
             let digit = binString.charAt(binString.length - 1 - i);
             if (digit == "1") {
                 purchased[i] = true;
@@ -94,23 +104,6 @@ function shopInit() {
     let raritiesVisited = {"common": false, "uncommon": false, "rare": false, "epic": false, "legendary": false};
     for (let i = 0; i < decks.length; i++) {
         if (i >= purchased.length || purchased[i] == false) {
-            /*switch (raritiesVisited) {
-                case "common":
-                    raritiesVisited.common = true;
-                    break;
-                case "uncommon":
-                    raritiesVisited.uncommon = true;
-                    break;
-                case "rare":
-                    raritiesVisited.rare = true;
-                    break;
-                case "epic":
-                    raritiesVisited.epic = true;
-                    break;
-                case "legendary":
-                    raritiesVisited.legendary = true;
-                    break;
-            }*/
             const deck = decks[i];
             raritiesVisited[`${deck.rarity}`] = true;
             const element = document.createElement("div");
@@ -127,10 +120,74 @@ function shopInit() {
     }
 
     for (let rarityVisited in raritiesVisited) {
+        document.getElementById(`${rarityVisited}-container`).style = "display:flex;"
         if (raritiesVisited[`${rarityVisited}`] == false) {
             const soldOut = document.createElement("p");
             soldOut.textContent = "Sold out";
             document.getElementById(`${rarityVisited}-container`).appendChild(soldOut);
+        }
+    }
+}
+
+function selectDeck(id, i) {
+    for (let deck of decks) {
+        const element = document.getElementById(`deck-${deck.title}`);
+        if (element != null) {
+            element.classList.remove("selectedDeck");
+        }
+        if(`deck-${deck.title}` == id) {
+            document.getElementById(`deck-${deck.title}`).classList.add("selectedDeck");
+            localStorage.setItem("selectedDeck", i);
+        }
+    }
+}
+
+function deckInit() {
+
+    document.getElementById("common-container").innerHTML = `<legend>Common</legend>`;
+    document.getElementById("uncommon-container").innerHTML = `<legend>Uncommon</legend>`;
+    document.getElementById("rare-container").innerHTML = `<legend>Rare</legend>`;
+    document.getElementById("epic-container").innerHTML = `<legend>Epic</legend>`;
+    document.getElementById("legendary-container").innerHTML = `<legend>Legendary</legend>`;
+
+    purchased = [];
+
+    const binString = intToBin(deckValue);
+    if (binString !== "0") {
+        for (let i = 0; i < binString.length; i++) {
+            let digit = binString.charAt(binString.length - 1 - i);
+            if (digit == "1") {
+                purchased[i] = true;
+            } else {
+                purchased[i] = false;
+            }
+        }
+    }
+
+    let raritiesVisited = {"common": false, "uncommon": false, "rare": false, "epic": false, "legendary": false};
+    for (let i = 0; i < decks.length; i++) {
+        if (i < purchased.length && purchased[i] == true) {
+            const deck = decks[i];
+            raritiesVisited[`${deck.rarity}`] = true;
+            const element = document.createElement("div");
+            const button = document.createElement("button");
+            button.setAttribute("class", `deck-option ${deck.rarity}`);
+            button.setAttribute("id", `deck-${deck.title}`);
+            button.textContent = deck.title;
+            if (i == selected) {
+                button.classList.add("selectedDeck");
+            }
+            button.addEventListener("click", ()  => {
+                selectDeck(`deck-${deck.title}`, i);
+            });
+            element.appendChild(button);
+            document.getElementById(`${deck.rarity}-container`).appendChild(element);
+        }
+    }
+
+    for (let rarityVisited in raritiesVisited) {
+        if (raritiesVisited[`${rarityVisited}`] == false) {
+            document.getElementById(`${rarityVisited}-container`).style = "display:none;";
         }
     }
 }
@@ -303,24 +360,23 @@ function stopKeyEvent(e){
   e.stopPropagation();
 }
 
-function showShop() {
-    console.log("Show shop");
-}
-
-function showDecks() {
-    shopInit();
-    console.log("Show decks");
-}
-
 const shopButton = document.getElementById("shop-button-controller");
+const deckButton = document.getElementById("deck-button-controller");
+
 shopButton.addEventListener("click", () => {
     if (shopButton.classList.contains("selected")) {
         return;
     }
-    showShop();
+    shopButton.classList.add("selected");
+    deckButton.classList.remove("selected");
+    shopInit();
 });
 
-const deckButton = document.getElementById("deck-button-controller");
 deckButton.addEventListener("click", () => {
-    
+    if (deckButton.classList.contains("selected")) {
+        return;
+    }
+    deckButton.classList.add("selected");
+    shopButton.classList.remove("selected");
+    deckInit();
 });

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Information - Black-Jacks</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="information-page">
+  <header id="top-nav">
+    <nav>
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="learn.html" class="nav-link">How to Play</a>
+      <a href="visuals.html" class="nav-link">Visuals</a>
+      <a href="profile.html" class="nav-link">Profile</a>
+      <a href="information.html" class="nav-link">Players</a>
+    </nav>
+  </header>
+
+  <main id="inform-main" class="Visual-page">
+    <section id="inform-data">
+      <p class="info-heading">ALL PLAYERS DATA</p>
+      <p class="info-labels">RANK | NAME | AMOUNT | STREAK</p>
+
+      <div class="view-toggle">
+        <button id="list-view-btn">List View</button>
+        <button id="grid-view-btn">Grid View</button>
+      </div>
+
+      <div id="data-linker">
+        <div id="players-list">Loading Player Information...</div>
+        <div id="pagination-container"></div>
+      </div>
+    </section>
+  </main>
+
+  <script src="leaderboard.js"></script>
+  <script src="shortcut.js"></script>
+</body>
+</html>
