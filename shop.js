@@ -343,6 +343,13 @@ function imageUpload(){
     document.body.removeChild(blur);
     document.body.removeChild(popup);
     document.removeEventListener('keydown', stopKeyEvent, { capture: true });
+    localStorage.setItem(deckName, JSON.stringify(uploaded.src));
+
+    let cardDeck = document.getElementsByClassName("dealer-deck")[0];
+    let customDeck = document.createElement("img");
+    customDeck.src = uploaded.src;
+    customDeck.classList.add("custom-deck");
+    cardDeck.appendChild(customDeck);
   });
   
   popup.appendChild(imageLabel);
