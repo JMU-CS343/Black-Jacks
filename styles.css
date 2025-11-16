@@ -748,6 +748,12 @@ button.inverse {
   border: solid rgb(0, 255, 247) 5px;
 }
 
+
+#popup-cancel {
+  margin-left: 5vw;
+  margin-bottom: 2vh;
+}
+
 #inform-main {
   width: 90%;
   max-width: 1000px;

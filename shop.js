@@ -304,10 +304,25 @@ function imageUpload(){
 
   nameContainer.appendChild(nameLabel);
   nameContainer.appendChild(deckName);
+
+  const buttonContainer = document.createElement("div");
   
   const confirm = document.createElement("button");
   confirm.textContent = "Confirm";
   confirm.disabled = true;
+  
+  const cancel = document.createElement ('button');
+  cancel.textContent = "Cancel";
+  cancel.id = "popup-cancel";
+
+  buttonContainer.appendChild(confirm);
+  buttonContainer.appendChild(cancel);
+
+  cancel.addEventListener("click", () => {
+    document.body.removeChild(blur);
+    document.body.removeChild(popup);
+    document.removeEventListener('keydown', stopKeyEvent, { capture: true });
+  })
 
   let imageUploaded = false;
   let deckNamed = false;
@@ -343,8 +358,8 @@ function imageUpload(){
     document.body.removeChild(blur);
     document.body.removeChild(popup);
     document.removeEventListener('keydown', stopKeyEvent, { capture: true });
-    localStorage.setItem(deckName, JSON.stringify(uploaded.src));
 
+    localStorage.setItem(deckName, JSON.stringify(uploaded.src));
     let cardDeck = document.getElementsByClassName("dealer-deck")[0];
     let customDeck = document.createElement("img");
     customDeck.src = uploaded.src;
@@ -356,7 +371,7 @@ function imageUpload(){
   popup.appendChild(imageInput);
   popup.appendChild(imageContainer);
   popup.appendChild(nameContainer);
-  popup.appendChild(confirm);
+  popup.appendChild(buttonContainer);
   
   document.body.appendChild(blur);
   document.body.appendChild(popup);
