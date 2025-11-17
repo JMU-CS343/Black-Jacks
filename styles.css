@@ -853,3 +853,17 @@ button.inverse {
   padding: 8px 2px;
   background-color: white;
 }
+
+
+#profileContainer {
+  text-align: center;
+}
+
+#profileContainer > button {
+  width: 8vw;
+  height: 6vh;
+}
+
+#profileContainer > button:hover {
+  background-color: red;
+}
