@@ -640,6 +640,7 @@ body {
   border: 3px solid black;
   font-size: 0.8rem;
   background-color: #F0EAD6;
+  align-items: center;
 }
 
 .popup {
