@@ -1,25 +1,10 @@
-let isAnimated = false;
 const dealButton = document.getElementById('deal-button');
 const deck = document.getElementsByClassName('dealer-deck')[0];
 
-let target = document.getElementById('playerC1');
-
-// Given a target, changes the default location for 
-// cards to be dealt to
-function changeTargetCard(targetId){
-  if (targetId == "" || targetId == undefined){
-    console.log("No target indicated");
-    return;
-  }
-  target = document.getElementById(targetId);
-  isAnimated = false;
-}
-
-dealButton.addEventListener("click", () => {
-  if (isAnimated){
-    return;
-  }
-
+// Animation function for dealing cards
+// Target is animation destination, removeCover is a special boolean indicating
+// whether or not to "flip the card", this is mainly for dealers second card
+function animateCard(target, removeCover){
   const deckRect = deck.getBoundingClientRect();
   const targetRect = target.getBoundingClientRect();
 
@@ -49,8 +34,10 @@ dealButton.addEventListener("click", () => {
   // (changing playerC1 to be an ace of hearts for example), once this is done make the card visible
 
   // "Flip" the card after 1.5 seconds
-  setTimeout(() => {
-    copy.remove();
-  }, 1500);
+  if (removeCover == true) {
+    setTimeout(() => {
+      copy.remove();
+    }, 1500);
+  }
   isAnimated = true;
-});
+}

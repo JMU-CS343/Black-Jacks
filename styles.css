@@ -94,6 +94,7 @@ li > button {
   background-color: white;
   color: black;
   position: relative;
+  visibility: hidden;
 }
 
 /* When custom decks implimented, change font/color here */
@@ -243,6 +244,7 @@ li > button {
   place-self: center;
   text-align: center;
   position: relative;
+  visibility: hidden;
 }
 
 #player-splitC5{

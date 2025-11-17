@@ -53,12 +53,12 @@
         
         <!-- Dealer section -->
         <div id="dealer">
-          <div class="card" id="dealerC5">Deal5</div>
-          <div class="card" id="dealerC4">Deal4</div>
-          <div class="card" id="dealerC3">Deal3</div>
+          <div class="card dealer" id="dealerC5"></div>
+          <div class="card dealer" id="dealerC4"></div>
+          <div class="card dealer" id="dealerC3"></div>
           <!-- Use classlist.toggle to switch this card between unflipped and card in JS -->
-          <div class="card" id="dealerC2">Deal2</div>
-          <div class="card" id="dealerC1">Deal1</div>
+          <div class="card dealer" id="dealerC2"></div>
+          <div class="card dealer" id="dealerC1"></div>
           <div class="unflipped-card dealer-deck"></div>
           <p id="dealer-total">Dealer Total: 0</p>
         </div>
@@ -77,11 +77,11 @@
 
         <!-- Player section -->
         <div id="player">
-          <div class="card" id="playerC5"></div>
-          <div class="card" id="playerC4"></div>
-          <div class="card" id="playerC3"></div>
-          <div class="card" id="playerC2"></div>
-          <div class="card" id="playerC1"></div>
+          <div class="card player" id="playerC5"></div>
+          <div class="card player" id="playerC4"></div>
+          <div class="card layer" id="playerC3"></div>
+          <div class="card player" id="playerC2"></div>
+          <div class="card player" id="playerC1"></div>
 
           <!-- Value will likely be overwritten using setTextContent() -->
           <p id="player-total">Player Total: 0</p>
@@ -132,6 +132,7 @@
   <!--LOAD PRIMARY SCRIPTS-->
   <script src="shop.js"></script>
   <script src="leaderboard.js"></script>
+  <script src="script.js"></script>
   <script src="game.js"></script>
 
   <script src="shortcut.js"></script>

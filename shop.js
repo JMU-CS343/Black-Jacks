@@ -262,8 +262,6 @@ function handleShopClick(id, title, rarity, index) {
 // Next two lines strictly for testing,
 // This should be called when the legendary deck
 // is purchased and that deck should be able to be purchased repeatedly
-let hitButton = document.getElementById("hit-button");
-hitButton.addEventListener("click", imageUpload);
 
 // Need to fix up the css
 // Need to add a cancel button
