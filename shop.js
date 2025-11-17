@@ -143,7 +143,6 @@ function selectDeck(id, i) {
 }
 
 function deckInit() {
-
     document.getElementById("common-container").innerHTML = `<legend>Common</legend>`;
     document.getElementById("uncommon-container").innerHTML = `<legend>Uncommon</legend>`;
     document.getElementById("rare-container").innerHTML = `<legend>Rare</legend>`;
@@ -353,18 +352,20 @@ function imageUpload(){
   });
 
   // Handle logic for saving the deck here
-  // Maybe create an object with key: deckName and value: uploaded.src
   confirm.addEventListener("click", () => {
     document.body.removeChild(blur);
     document.body.removeChild(popup);
     document.removeEventListener('keydown', stopKeyEvent, { capture: true });
 
-    localStorage.setItem(deckName, JSON.stringify(uploaded.src));
+    // When loading in the custom decks copy the code from function populateLocalStorage in lab 10
+    let customDeck = {name: deckName.value, src: uploaded.src};
+    localStorage.setItem('custom decks', JSON.stringify([...JSON.parse(localStorage.getItem('custom decks') ?? '[]'), customDeck]));
+
     let cardDeck = document.getElementsByClassName("dealer-deck")[0];
-    let customDeck = document.createElement("img");
-    customDeck.src = uploaded.src;
-    customDeck.classList.add("custom-deck");
-    cardDeck.appendChild(customDeck);
+    let deckImg = document.createElement("img");
+    deckImg.src = uploaded.src;
+    deckImg.classList.add("custom-deck");
+    cardDeck.appendChild(deckImg);
   });
   
   popup.appendChild(imageLabel);
