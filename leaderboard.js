@@ -361,7 +361,43 @@ function setDay(valToSet) {
     .catch(error => console.error('Error:', error));
 }
 
+function streakCounter() {
+  const streakDisplay = document.getElementById("streak-count");
+  getDay().then(lastTimestamp => {
+    getStreak().then(currentStreak => {
+      const now = new Date();
+      if (!lastTimestamp || lastTimestamp === 0) {
+        setDay(now.getTime());
+        setStreak(1);
+        displayStreak(1);
+        return;
+      }
+
+      const lastLogin = new Date(lastTimestamp);
+      const sameDay = lastLogin.getFullYear() === now.getFullYear()
+       && lastLogin.getMonth() === now.getMonth() && lastLogin.getDate() === now.getDate();
+      const lastMidnight = new Date(lastLogin.getFullYear(), lastLogin.getMonth(), lastLogin.getDate());
+      const todayMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+      const diffInDays = Math.floor((todayMidnight - lastMidnight) / (1000 * 60 * 60 * 24));
+      
+      if (sameDay) {
+        streakDisplay.textContent = currentStreak + " day streak";
+      } else if (diffInDays === 1) {
+        const newStreak = currentStreak + 1;
+        setDay(now.getTime());
+        setStreak(newStreak);
+        streakDisplay.textContent = newStreak + " day streak";
+      } else {
+        setDay(now.getTime());
+        setStreak(1);
+        streakDisplay.textContent = "1 day streak";
+      }
+    });
+  });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   displayer();
   information();
+  streakCounter();
 });
