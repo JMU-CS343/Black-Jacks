@@ -730,6 +730,12 @@ button.inverse {
   object-fit: cover;
 }
 
+.custom-deck {
+  width: 100%;
+  height: 100%;
+
+}
+
 #deck-name-container {
   display: flex;
   padding-bottom: 2vh;
@@ -741,6 +747,12 @@ button.inverse {
 
 .selectedDeck {
   border: solid rgb(0, 255, 247) 5px;
+}
+
+
+#popup-cancel {
+  margin-left: 5vw;
+  margin-bottom: 2vh;
 }
 
 #inform-main {

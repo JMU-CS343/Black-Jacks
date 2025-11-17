@@ -7,7 +7,6 @@ const double = document.getElementById("double-button");
 let deckId = null;
 let rem = null;
 
-// Add balloons that pop up when there is an API error
 const shuffleDeck = async () => {
   try {
     const response = await fetch('https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=2');
