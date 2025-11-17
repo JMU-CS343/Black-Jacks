@@ -1,5 +1,5 @@
 document.addEventListener("keydown", (event) => {
-  if (event.altKey) {
+  if (event.altKey || event.ctrlKey) {
 
     switch (event.key) {
       case "1":
@@ -13,6 +13,9 @@ document.addEventListener("keydown", (event) => {
         break;
       case "4":
         window.location.href = "profile.html";
+        break;
+      case "5":
+        window.location.href = "information.html";
         break;
     }
 

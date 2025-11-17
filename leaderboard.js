@@ -173,6 +173,116 @@ function displayer() {
   })
 }
 
+function information() {
+  getBoardData().then(data => {
+    const playersList = document.getElementById("players-list");
+    const paginationContainer = document.getElementById("pagination-container");
+
+    const sortedPlayers = data.players.slice().sort(function(a, b) {
+      let aScore = 0;
+      let bScore = 0;
+      if (a.scores && a.scores[SCORE_ID] && a.scores[SCORE_ID].score) {
+        aScore = a.scores[SCORE_ID].score;
+      }
+      if (b.scores && b.scores[SCORE_ID] && b.scores[SCORE_ID].score) {
+        bScore = b.scores[SCORE_ID].score;
+      }
+      return bScore - aScore;
+    });
+
+    const playersPerPage = 9;
+    let currentPage = 1;
+    const totalPages = Math.ceil(sortedPlayers.length / playersPerPage);
+
+    function renderPage(page) {
+      playersList.innerHTML = "";
+
+      const start = (page - 1) * playersPerPage;
+      const end = start + playersPerPage;
+      const playersToShow = sortedPlayers.slice(start, end);
+
+      for (let i = 0; i < playersToShow.length; i++) {
+        const player = playersToShow[i];
+        const name = player.name;
+        let money = 0;
+        let streak = 0;
+        if (player.scores && player.scores[SCORE_ID] && player.scores[SCORE_ID].score) {
+          money = player.scores[SCORE_ID].score;
+        }
+        if (player.scores && player.scores[STREAK_ID] && player.scores[STREAK_ID].score) {
+          streak = player.scores[STREAK_ID].score;
+        }
+        const rank = start + i + 1;
+
+        const p = document.createElement("p");
+        if (playersList.classList.contains("grid-view")) {
+          p.innerHTML = `
+            <strong>Rank:</strong> #${rank}<br>
+            <strong>Name:</strong> ${name}<br>
+            <strong>Amount:</strong> $${money}<br>
+            <strong>Streak:</strong> ${streak}
+          `;
+        } else {
+          p.textContent = `Rank: #${rank} | Name: ${name} | Amount: $${money} | Streak: ${streak}`;
+        }
+        playersList.appendChild(p);
+      }
+      renderPaginationControls();
+    }
+
+    function renderPaginationControls() {
+      paginationContainer.innerHTML = "";
+
+      const prevButton = document.createElement("button");
+      prevButton.textContent = "Previous Page";
+      prevButton.disabled = currentPage === 1;
+      prevButton.onclick = () => {
+        if (currentPage > 1) {
+          currentPage--;
+          renderPage(currentPage);
+        }
+      };
+
+      const nextButton = document.createElement("button");
+      nextButton.textContent = "Next Page";
+      nextButton.disabled = currentPage === totalPages;
+      nextButton.onclick = () => {
+        if (currentPage < totalPages) {
+          currentPage++;
+          renderPage(currentPage);
+        }
+      };
+
+      const pageIndicator = document.createElement("span");
+      pageIndicator.textContent = `Page ${currentPage} of ${totalPages}`;
+      pageIndicator.style.margin = "0 10px";
+
+      paginationContainer.appendChild(prevButton);
+      paginationContainer.appendChild(pageIndicator);
+      paginationContainer.appendChild(nextButton);
+    }
+
+    renderPage(currentPage);
+
+    const listBtn = document.getElementById("list-view-btn");
+    const gridBtn = document.getElementById("grid-view-btn");
+
+    playersList.classList.add("list-view");
+
+    listBtn.addEventListener("click", () => {
+      playersList.classList.remove("grid-view");
+      playersList.classList.add("list-view");
+      renderPage(currentPage);
+    });
+
+    gridBtn.addEventListener("click", () => {
+      playersList.classList.remove("list-view");
+      playersList.classList.add("grid-view");
+      renderPage(currentPage);
+    });
+  });
+}
+
 function clearId() {
     localStorage.removeItem("id");
 }
@@ -255,4 +365,5 @@ function setDay(valToSet) {
 
 document.addEventListener("DOMContentLoaded", () => {
   displayer();
+  information();
 });

@@ -729,6 +729,12 @@ button.inverse {
   object-fit: cover;
 }
 
+.custom-deck {
+  width: 100%;
+  height: 100%;
+
+}
+
 #deck-name-container {
   display: flex;
   padding-bottom: 2vh;
@@ -741,6 +747,112 @@ button.inverse {
 .selectedDeck {
   border: solid rgb(0, 255, 247) 5px;
 }
+
+
+#popup-cancel {
+  margin-left: 5vw;
+  margin-bottom: 2vh;
+}
+
+#inform-main {
+  width: 90%;
+  max-width: 1000px;
+  margin: 40px auto;
+  text-align: center;
+  margin: top;
+  align-items: flex-start;
+}
+
+.info-heading {
+  font-size: 2rem;
+  font-weight: bold;
+  border-radius: 3px;
+  color: white;
+  border: 2px solid white;
+  background-color: #1B1212;
+  padding: 30px;
+  top: 0;
+  left: 0;
+  right: 0;
+  position: fixed;
+  text-align: center;
+  z-index: 1000;
+}
+
+.info-labels {
+  font-size: 1.2rem;
+  font-weight: 600;
+  border-bottom: 2px solid #333;
+  margin-bottom: 20px;
+  padding: 10px;
+  top: 110px;
+  left: 0;
+  right: 0;
+  position: fixed;
+  background-color: grey;
+  border: 2px solid white;
+  z-index: 999;
+}
+
+#data-linker {
+  border-radius: 5px;
+  border: 2px solid black;
+  background-color: beige;
+  color: black;
+  width: 700px;
+  height: 500px;
+  position: fixed;
+  top: 250px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 10px;
+  z-index: 995;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow-y: auto;
+  font-size: large;
+  overflow: visible;
+}
+
+.view-toggle {
+  position: fixed;
+  top: 205px;
+  left: 45%;
+  right: 45%;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  z-index: 998;
+}
+
+#players-list.list-view {
+  text-align: center;
+}
+
+#players-list.list-view p {
+  border: 2px solid black;
+  border-radius: 5px;
+  background-color: white;
+  padding: 3px 25px;
+}
+
+#players-list.grid-view {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  text-align: center;
+}
+
+#players-list.grid-view p {
+  border: 2px solid black;
+  border-radius: 5px;
+  padding: 8px 2px;
+  background-color: white;
+}
+
 
 #profileContainer {
   text-align: center;
