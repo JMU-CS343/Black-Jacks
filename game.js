@@ -1,10 +1,12 @@
 let money;
 let deckValue; 
+let username; 
 
 function init() {
     getInitalData().then(data => {
         money = data.score;
         deckValue = data.decks;
+        username = data.name;
         shopInit();
     });
 }

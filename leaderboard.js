@@ -146,7 +146,9 @@ function displayer() {
     const myrank = document.getElementById("my-rank");
     const playerId = localStorage.getItem("id");
 
-    leader.innerHTML = "";
+    if (leader != null) {
+        leader.innerHTML = "";
+    }
 
     const sortedPlayers = [...data.players].sort(
       (a, b) => b.scores[SCORE_ID].score - a.scores[SCORE_ID].score
