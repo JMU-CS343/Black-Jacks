@@ -15,9 +15,17 @@
     </nav>
   </header>
 
-  <main>
-    <h1>Profile in progress...</h1>
+  <main id="profileContainer">
+    <h1 id="username"></h1>
+    <h3 id="funds"></h3>
+    <h3 id="decksObtained"></h3>
+    <h3 id="playerId"></h3>
+    <input type="text" id="idInput">
+    <button id="signOut">Sign out</button>
+    <p id="warning" style="color:red;">Warning: If you sign out without recording your ID, you will not be able to sign back in</p>
   </main>
   <script src="shortcut.js"></script>
+  <script src="binaryHelper.js"></script>
+  <script src="profile.js"></script>
 </body>
 </html>
