@@ -9,6 +9,7 @@ bjHit.disabled = true;
 bjSplit.disabled = true;
 bjStand.disabled = true;
 bjDouble.disabled = true;
+// Disable hit button as well once betting buttons implimented
 
 // Retrieve cards (split cards retrieved as needed)
 let pc1 = document.getElementById("playerC1");
@@ -25,6 +26,8 @@ let dc4 = document.getElementById("dealerC4");
 let dc5 = document.getElementById("dealerC5");
 let dTotal = document.getElementById("dealer-total");
 
+let sTotal = document.getElementById("player-split-total");
+
 // Helpful game globals
 let sumPlayer = 0;
 let sumDealer = 0;
@@ -32,6 +35,7 @@ let sumDealer = 0;
 let usedCards = [];
 let dc2Cover;
 let playerSplit = false;
+let playerDouble = false;
 let playerCanHit = true;
 
 // Return a promise that forces the calling function to wait
@@ -112,6 +116,7 @@ async function dealHelper(playerCard, removeCover) {
 }
 
 // Increment counter's total by value
+// This is not a setter
 function updateTotal(counter, value){
   let strs = counter.textContent.split(": ");
   strs[1] = parseInt(strs[1]) + value;
@@ -128,9 +133,7 @@ async function startGame(){
   
   await shuffleDeck();
   // Super annoying but need to use await since deal helper is async and returns promise
-  //let pVal1 = await dealHelper(pc1, true);
-  let pVal1 = 11;
-  ace(pc1, "HEARTS");
+  let pVal1 = await dealHelper(pc1, true);
   sumPlayer += pVal1;
   updateTotal(pTotal, pVal1);
   usedCards.push(pc1);
@@ -147,8 +150,8 @@ async function startGame(){
 
   let dVal2 = await dealHelper(dc2, false);
   sumDealer += dVal2;
+  // Use dc2Cover.remove to "flip" once player is out of moves
   dc2Cover = document.getElementsByClassName("copy")[0];
-  // use dc2Cover.remove to "flip" once player is out of moves
   usedCards.push(dc2);
 
   // TODO: handle blackjack logic
@@ -176,12 +179,12 @@ async function startGame(){
 
 // General shutdown events, regardless of how the game ends
 function endGame(){
-  console.log(usedCards);
   bjDeal.disabled = false;
   bjHit.disabled = true;
   bjSplit.disabled = true;
   bjStand.disabled = true;
   bjDouble.disabled = true;
+
   usedCards.forEach(used => {
     if (used.classList.contains("player")){
       used.className = "card player";
@@ -189,19 +192,31 @@ function endGame(){
     else {
       used.className = "card dealer";
     }
-      used.innerHTML = "";
-      used.style.visibility = "hidden";
-    });
+    used.innerHTML = "";
+    used.style.visibility = "hidden";
+  });
+
+  sTotal.style.visibility = "hidden";
+
   dc2Cover.remove();
+
+  playerCanHit = true;
+  playerDouble = false;
+  playerSplit = false;
+
   sumPlayer = 0;
   sumDealer = 0;
-  bjDeal.disabled = false;
   pTotal.textContent = "Player Total: 0";
   dTotal.textContent = "Dealer Total: 0";
   usedCards = [];
 }
 
+// Hit functionality, upon bust calls dealer function
 async function hit(){
+  if (!playerCanHit){
+    bjHit.disabled = true;
+    return;
+  }
   // TODO: Special logic for split cards
   if (playerSplit){
 
@@ -238,25 +253,38 @@ async function hit(){
         }
       }
     }
-    
+
     updateTotal(pTotal, hitVal);
 
-    // TODO: handle loss logic
+    // TODO: handle player bust logic
     if (sumPlayer > 21){
         await wait (900);
         endGame();
       }
     // TODO: Call dealer action function
-    if (!playerCanHit){
-      bjHit.disabled = true;
-    }
   }
 }
 
+// Stand functionality, just calls dealer function
 function stand(){
   //TODO: Call dealer action function
+}
+
+// Double functionality, calls hit once
+function double(){
+  playerDouble = true;
+  hit();
+  playerCanHit = false;
+  //TODO: Call dealer function, use playerDouble to track money adjustments
+}
+
+//TODO: Move pc2 to player split 1, clear pc2, make split total visible and recalculate totals,
+//initialize split cards
+function split(){
+
 }
 
 bjDeal.addEventListener("click", startGame);
 bjHit.addEventListener("click", hit);
 bjStand.addEventListener("click", stand);
+bjDouble.addEventListener("click", split);
