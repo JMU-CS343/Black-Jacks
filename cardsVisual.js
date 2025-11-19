@@ -1,12 +1,5 @@
-let testCard = document.getElementById("playerC1");
-
 // Since cards absolutely positioned, resizing window messes up the image layout
 // Need to figure out how to handle this
-
-function setupCard(card){
-  // faceHelper(card, "JACK", "CLUBS");
-  // ten(card, "SPADES");
-}
 
 // DOCUMENTATION FOR ALL CARD FUNCS:
 // Create an array of img elems with length being the card number
@@ -298,6 +291,3 @@ function faceHelper(card, cardStr, suitStr) {
   img.style.paddingRight = "9%";
   card.ariaLabel = `${cardStr.toLowerCase()} of ${suitStr.toLowerCase()}`;
 }
-
-// Delete later
-setupCard(testCard);
