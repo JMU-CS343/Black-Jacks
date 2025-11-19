@@ -867,3 +867,12 @@ button.inverse {
 #profileContainer > button:hover {
   background-color: red;
 }
+
+#idInput {
+  margin: auto;
+  margin-bottom: 15px;
+}
+
+#alternative {
+  margin-top: 45px;
+}
