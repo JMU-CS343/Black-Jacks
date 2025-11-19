@@ -11,7 +11,7 @@ bjStand.disabled = true;
 bjDouble.disabled = true;
 // Disable hit button as well once betting buttons implimented
 
-// Retrieve cards (split cards retrieved as needed)
+// Retrieve cards
 let pc1 = document.getElementById("playerC1");
 let pc2 = document.getElementById("playerC2");
 let pc3 = document.getElementById("playerC3");
@@ -19,12 +19,21 @@ let pc4 = document.getElementById("playerC4");
 let pc5 = document.getElementById("playerC5");
 let pDisplayedTotal = document.getElementById("player-total");
 
+// Retrieve split cards
+let sc1 = document.getElementById("player-splitC1");
+let sc2 = document.getElementById("player-splitC2");
+let sc3 = document.getElementById("player-splitC3");
+let sc4 = document.getElementById("player-splitC4");
+let sc5 = document.getElementById("player-splitC5");
+let sDisplayedTotal = document.getElementById("player-split-total");
+
+// Other cards initialized in dealer function
 let dc1 = document.getElementById("dealerC1");
 let dc2 = document.getElementById("dealerC2");
-// let dc3 = document.getElementById("dealerC3");
-// let dc4 = document.getElementById("dealerC4");
-// let dc5 = document.getElementById("dealerC5");
 let dDisplayedTotal = document.getElementById("dealer-total");
+
+// Need this to be global becasue accessed by both deal and split
+let pVal2;
 // Need this to be a global becasue it is accessed by both deal and dealer
 let dVal2;
 
@@ -33,6 +42,7 @@ let sTotal = document.getElementById("player-split-total");
 // Helpful game globals
 let sumPlayer = 0;
 let sumDealer = 0;
+let sumSplit = 0;
 // Tracks which cards were dealt to make game reset easier
 let usedCards = [];
 let dc2Cover;
@@ -146,7 +156,7 @@ async function startGame(){
   updateTotal(dDisplayedTotal, dVal1);
   usedCards.push(dc1);
 
-  let pVal2 = await dealHelper(pc2, true);
+  pVal2 = await dealHelper(pc2, true);
   sumPlayer += pVal2;
   updateTotal(pDisplayedTotal, pVal2);
   usedCards.push(pc2);
@@ -171,12 +181,13 @@ async function startGame(){
     updateTotal(pDisplayedTotal, -10);
   }
 
-    bjHit.disabled = false;
-    bjStand.disabled = false;
-    bjDouble.disabled = false;
+  bjHit.disabled = false;
+  bjStand.disabled = false;
+  bjDouble.disabled = false;
   
+  //Move back into if when done testing
+  bjSplit.disabled = false;
   if (pVal1 == pVal2){
-    bjSplit.disabled = false;;
   }
 }
 
@@ -252,12 +263,13 @@ async function endGame(endMessage, moneyMessage){
 
   sumPlayer = 0;
   sumDealer = 0;
+  sumSplit = 0;
   pDisplayedTotal.textContent = "Player Total: 0";
   dDisplayedTotal.textContent = "Dealer Total: 0";
+  sDisplayedTotal.textContent = "Player Split Total: 0";
   usedCards = [];
 }
 
-// Hit functionality
 async function hit(){
   if (!playerCanHit){
     bjHit.disabled = true;
@@ -313,22 +325,32 @@ async function hit(){
   }
 }
 
-// Double functionality, calls hit once
-function double(){
+async function double(){
   playerDouble = true;
-  hit();
-  playerCanHit = false;
+  bjHit.disabled = true;
+  // await prevents synch issues
+  await hit();
   //TODO: Use playerDouble to track money adjustments
   dealer()
 }
 
-//TODO: Move pc2 to player split 1, clear pc2, make split total visible and recalculate totals,
-//initialize split cards
 function split(){
+  sc1.style.visibility = "visible";
+  sc1.innerHTML = pc2.innerHTML;
+  sc1.className = pc2.className;
+  
+  // Handle reset of old location
+  pc2.style.visibility = "hidden";
+  pc2.className = "card player";
+  pc2.innerHTML = "";
+  sumPlayer -= pVal2;
+  updateTotal(pDisplayedTotal, -pVal2);
 
+  sDisplayedTotal.style.visibility = "visible";
+  updateTotal(sDisplayedTotal, pVal2);
+  sumSplit += pVal2;
 }
 
-// Handles dealer actions, stand calls this immediately
 async function dealer(){
   dc2Cover.remove();
   updateTotal(dDisplayedTotal, dVal2)
@@ -352,20 +374,18 @@ async function dealer(){
     dealTarget += 1;
   }
 
-  // Dealer bust
   if (sumDealer > 21){
     //TODO: player win
     //Say username instead of player, replace money later
     endGame(`Player wins! P: ${sumPlayer} D: ${sumDealer} Dealer bust!`, `Player won $0`);
   }
 
-  // Dealer closer to BJ
   else if (sumDealer > sumPlayer && sumDealer <= 21){
     //TODO: dealer win
     //Say username instead of player, replace money later
     endGame(`Dealer wins. P: ${sumPlayer} D: ${sumDealer} Dealer closer to 21!`, `Player lost $0`);
   }
-  // Player closer to BJ
+
   else if (sumDealer < sumPlayer && sumPlayer <= 21){
     //TODO: player win
     if (playerDouble){
@@ -385,4 +405,5 @@ async function dealer(){
 bjDeal.addEventListener("click", startGame);
 bjHit.addEventListener("click", hit);
 bjStand.addEventListener("click", dealer);
-bjDouble.addEventListener("click", split);
+bjDouble.addEventListener("click", double);
+bjSplit.addEventListener("click", split);
