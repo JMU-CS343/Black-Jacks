@@ -103,7 +103,7 @@ function shopInit() {
 
     let raritiesVisited = {"common": false, "uncommon": false, "rare": false, "epic": false, "legendary": false};
     for (let i = 0; i < decks.length; i++) {
-        if (i >= purchased.length || purchased[i] == false) {
+        if (i == decks.length - 1 || i >= purchased.length || purchased[i] == false) {
             const deck = decks[i];
             raritiesVisited[`${deck.rarity}`] = true;
             const element = document.createElement("div");
