@@ -16,6 +16,26 @@ const DECK_ID = "144731";
 const DAY_ID = "146045";
 const STREAK_ID = "146046";
 
+function setDeckScore(scoreToSet) {
+    if (id == undefined) {
+        console.error("Player not yet initialized");
+        return;
+    }
+    return fetch(`https://leaderboarded.com/api/${TOKEN}/multiscore/`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            column_id: DECK_ID,
+            player_id: `${id}`,
+            score: scoreToSet,
+            operation: "set"
+        }),
+    })
+    .catch(error => console.error('Error:', error));
+}
+
 function getBoardData() {
     return fetch(`https://leaderboarded.com/api/${TOKEN}/board/`)
     .then(response => {
@@ -116,7 +136,9 @@ function addPlayer(name) {
     .then(data => {
         localStorage.setItem("id", data.player.id);
         id = localStorage.getItem("id");
-        setDeckScore(1);
+        setDeckScore(1).then(response => {
+            window.location.href = "profile.html";
+        });
     })
     .catch(error => console.error('Error:', error));
 }
@@ -125,7 +147,6 @@ function verifyId(id) {
   return getBoardData().then(data => {
     for (let i = 0; i < data.players.length; i++) {
         const player = data.players[i];
-        console.log(player.id + ", " + id);
         if (player.id == id) {
             return true;
         }
@@ -140,7 +161,6 @@ signOut.addEventListener("click", () => {
         window.location.href = "profile.html";
     } else {
         let id = idInput.value;
-        console.log(id);
         verifyId(id).then(value => {
             if (value) {
                 localStorage.setItem("id", id);
@@ -154,7 +174,6 @@ signOut.addEventListener("click", () => {
 });
 
 createAccount.addEventListener("click", () => {
-    console.log("CLUH");
     const blur = document.createElement("div");
     blur.setAttribute("class", "blur");
 
@@ -181,8 +200,6 @@ createAccount.addEventListener("click", () => {
 
         document.body.removeChild(blur);
         document.body.removeChild(popup);
-
-        //window.location.href = "profile.html";
     });
 
     const cancel = document.createElement("button");

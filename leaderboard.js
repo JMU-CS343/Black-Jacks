@@ -68,7 +68,6 @@ function setPlayerScore(scoreToSet) {
 }
 
 function setDeckScore(scoreToSet) {
-    console.log("SETTING DECK");
     if (id == undefined) {
         console.error("Player not yet initialized");
         return;
@@ -335,7 +334,7 @@ function getDay() {
         for (let i = 0; i < data.players.length; i++) {
             const player = data.players[i];
             if (player.id == id) {
-                return player.scores[STREAK_ID].score;
+                return player.scores[DAY_ID].score;
             }
         }
         console.error("ID not found in leaderboard service");

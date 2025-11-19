@@ -69,7 +69,7 @@ const decks = [
     },
 ]
 
-const costs = {"common": "$25", "uncommon": "$50", "rare": "$100", "epic": "$250", "legendary": "$500"};
+const costs = {"common": "$250", "uncommon": "$500", "rare": "$2000", "epic": "$5000", "legendary": "$15000"};
 
 let selected = localStorage.getItem("selectedDeck");
 if (selected == null) {
@@ -130,16 +130,22 @@ function shopInit() {
 }
 
 function selectDeck(id, i) {
+    console.log(id);
     for (let deck of decks) {
         const element = document.getElementById(`deck-${deck.title}`);
         if (element != null) {
             element.classList.remove("selectedDeck");
         }
-        if(`deck-${deck.title}` == id) {
-            document.getElementById(`deck-${deck.title}`).classList.add("selectedDeck");
-            localStorage.setItem("selectedDeck", i);
+    }
+    const customDecks = JSON.parse(localStorage.getItem("custom decks"));
+    for (let deck of customDecks) {
+        const custom = document.getElementById(`deck-${deck.name}`);
+        if (custom != null) {
+            custom.classList.remove("selectedDeck");
         }
     }
+    document.getElementById(id).classList.add("selectedDeck");
+    localStorage.setItem("selectedDeck", i);
 }
 
 function deckInit() {
@@ -182,6 +188,27 @@ function deckInit() {
             element.appendChild(button);
             document.getElementById(`${deck.rarity}-container`).appendChild(element);
         }
+    }
+
+    const customDecks = JSON.parse(localStorage.getItem("custom decks"));
+    let count = decks.length - 1;
+    for (let i = 0; i < customDecks.length; i++) {
+        let deck = customDecks[i];
+        raritiesVisited['legendary'] = true;
+        const element = document.createElement("div");
+        const button = document.createElement("button");
+        button.setAttribute("class", `deck-option legendary`);
+        button.setAttribute("id", `deck-${deck.name}`);
+        button.textContent = deck.name;
+
+        if ((count + i) == selected) {
+            button.classList.add("selectedDeck");
+        }
+        button.addEventListener("click", ()  => {
+            selectDeck(`deck-${deck.name}`, (count + i));
+        });
+        element.appendChild(button);
+        document.getElementById(`legendary-container`).appendChild(element);
     }
 
     for (let rarityVisited in raritiesVisited) {
@@ -237,6 +264,9 @@ function handleShopClick(id, title, rarity, index) {
         } else {
             document.body.removeChild(blur);
             document.body.removeChild(popup);
+            if (index == decks.length - 1) {
+                imageUpload();
+            }
         }
     });
 
@@ -250,6 +280,14 @@ function handleShopClick(id, title, rarity, index) {
 
     popup.appendChild(funds);
     popup.appendChild(header);
+
+    if (index == decks.length - 1) {
+        const warning = document.createElement("p");
+        warning.textContent = "Custom decks are ONLY saved locally";
+        warning.style = "color:red;margin-top:0px;"
+        popup.appendChild(warning);
+    }
+
     popup.appendChild(deck);
     popup.appendChild(cost);
     popup.appendChild(buttons);
