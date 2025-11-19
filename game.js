@@ -11,6 +11,8 @@ function init() {
         username = data.name;
         shopInit();
     });
+    // May need to move this
+    shuffleDeck();
 }
 init();
 

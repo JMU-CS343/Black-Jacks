@@ -130,7 +130,7 @@ function shopInit() {
 }
 
 function selectDeck(id, i) {
-    console.log(id);
+    // console.log(id);
     for (let deck of decks) {
         const element = document.getElementById(`deck-${deck.title}`);
         if (element != null) {

@@ -132,8 +132,9 @@ function updateTotal(counter, value){
 // Eventually add arg for betAmnt
 async function startGame(){
   bjDeal.disabled = true;
-  
-  await shuffleDeck();
+
+  // await shuffleDeck();
+
   // Super annoying but need to use await since deal helper is async and returns promise
   let pVal1 = await dealHelper(pc1, true);
   sumPlayer += pVal1;
@@ -152,14 +153,13 @@ async function startGame(){
 
   dVal2 = await dealHelper(dc2, false);
   sumDealer += dVal2;
-  // Use dc2Cover.remove to "flip" once player is out of moves
   dc2Cover = document.getElementsByClassName("copy")[0];
   usedCards.push(dc2);
 
   if (pVal1 + pVal2 == 21){
     // TODO: player BJ win
-    console.log("PLAYER BLACKJACK");
-    endGame();
+    //Say username instead of player, replace money later
+    endGame(`Blackjacks! Player wins! D: ${sumDealer}`, `Player wins $0`);
     return;
   }
   
@@ -181,7 +181,50 @@ async function startGame(){
 }
 
 // General shutdown events, regardless of how the game ends
-function endGame(){
+async function endGame(endMessage, moneyMessage){
+  await wait (1000);
+
+  // End game display window
+  const blur = document.createElement("div");
+  blur.setAttribute("class", "blur");
+
+  const popup = document.createElement("div");
+  popup.setAttribute("class", "popup");
+
+  const header = document.createElement("h3");
+  header.setAttribute("class", "end-title");
+  header.textAlign = "center";
+  header.textContent = `Game Over!`;
+
+  const subheader = document.createElement("h4");
+  subheader.setAttribute("class", "end-subtitle");
+  subheader.textContent = endMessage;
+
+  const payout = document.createElement("p");
+  if(moneyMessage.includes("win"))
+    payout.setAttribute("class", "end-payout-win");
+  else
+    payout.setAttribute("class", "end-payout-loss");
+  payout.textContent = moneyMessage;
+
+  const again = document.createElement("button");
+  again.setAttribute("class", "end-replay");
+  again.textContent = "Play again!"
+
+  popup.appendChild(header);
+  popup.appendChild(subheader);
+  popup.appendChild(payout);
+  popup.appendChild(again);
+
+  document.body.append(popup);
+  document.body.append(blur);
+
+  again.addEventListener("click", () => {
+    document.body.removeChild(blur);
+    document.body.removeChild(popup);
+  });
+
+  // Actual gameplay cleanup
   bjDeal.disabled = false;
   bjHit.disabled = true;
   bjSplit.disabled = true;
@@ -254,7 +297,7 @@ async function hit(){
             !val.classList.contains("ace-is-1")){
               sumPlayer -= 10;
               hitVal -= 10;
-              toHit.classList.add("ace-is-1");
+              val.classList.add("ace-is-1");
           break;
         }
       }
@@ -264,10 +307,9 @@ async function hit(){
 
     if (sumPlayer > 21){
       // TODO: dealer win
-        await wait (900);
-        endGame();
+        //Say username instead of player, replace money later
+        endGame(`Player bust. P: ${sumPlayer} Dealer wins!`, `Player lost $0`);
       }
-    // TODO: Call dealer action function
   }
 }
 
@@ -276,7 +318,8 @@ function double(){
   playerDouble = true;
   hit();
   playerCanHit = false;
-  //TODO: Call dealer function, use playerDouble to track money adjustments
+  //TODO: Use playerDouble to track money adjustments
+  dealer()
 }
 
 //TODO: Move pc2 to player split 1, clear pc2, make split total visible and recalculate totals,
@@ -291,8 +334,8 @@ async function dealer(){
   updateTotal(dDisplayedTotal, dVal2)
   if (sumDealer == 21){
     //TODO: Dealer BJ win
-    console.log("DEALER BLACKJACK");
-    endGame();
+    //Say username instead of player, replace money later
+    endGame(`Player loses. P: ${sumPlayer} Dealer had blackjack!`, `Player lost $0`);
   }
 
   let dealTarget = 3;
@@ -312,26 +355,31 @@ async function dealer(){
   // Dealer bust
   if (sumDealer > 21){
     //TODO: player win
-    console.log("DEALER BUST");
+    //Say username instead of player, replace money later
+    endGame(`Player wins! P: ${sumPlayer} D: ${sumDealer} Dealer bust!`, `Player won $0`);
   }
 
   // Dealer closer to BJ
   else if (sumDealer > sumPlayer && sumDealer <= 21){
     //TODO: dealer win
-    console.log("DEALER WIN");
+    //Say username instead of player, replace money later
+    endGame(`Dealer wins. P: ${sumPlayer} D: ${sumDealer} Dealer closer to 21!`, `Player lost $0`);
   }
   // Player closer to BJ
   else if (sumDealer < sumPlayer && sumPlayer <= 21){
     //TODO: player win
-    console.log("PLAYER WIN");
+    if (playerDouble){
+      //TODO: double payment
+    }
+    //Say username instead of player, replace money later
+    endGame(`Player wins! P: ${sumPlayer} D: ${sumDealer} Player closer to 21!`, `Player won $0`);
   }
 
-  // Dealer and player bust handled elsewhere
   else {
     //TODO: dealer push
-    console.log("DEALER PUSH");
+    //Say username instead of player, replace money later
+    endGame(`Dealer push! P: ${sumPlayer} D: ${sumDealer}`, `Player bet returned`);
   }
-  endGame();
 }
 
 bjDeal.addEventListener("click", startGame);
