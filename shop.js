@@ -259,10 +259,6 @@ function handleShopClick(id, title, rarity, index) {
     document.body.appendChild(popup);
 }
 
-// Next two lines strictly for testing,
-// This should be called when the legendary deck
-// is purchased and that deck should be able to be purchased repeatedly
-
 // Need to fix up the css
 // Need to add a cancel button
 function imageUpload(){

@@ -17,14 +17,16 @@ let pc2 = document.getElementById("playerC2");
 let pc3 = document.getElementById("playerC3");
 let pc4 = document.getElementById("playerC4");
 let pc5 = document.getElementById("playerC5");
-let pTotal = document.getElementById("player-total");
+let pDisplayedTotal = document.getElementById("player-total");
 
 let dc1 = document.getElementById("dealerC1");
 let dc2 = document.getElementById("dealerC2");
-let dc3 = document.getElementById("dealerC3");
-let dc4 = document.getElementById("dealerC4");
-let dc5 = document.getElementById("dealerC5");
-let dTotal = document.getElementById("dealer-total");
+// let dc3 = document.getElementById("dealerC3");
+// let dc4 = document.getElementById("dealerC4");
+// let dc5 = document.getElementById("dealerC5");
+let dDisplayedTotal = document.getElementById("dealer-total");
+// Need this to be a global becasue it is accessed by both deal and dealer
+let dVal2;
 
 let sTotal = document.getElementById("player-split-total");
 
@@ -135,27 +137,28 @@ async function startGame(){
   // Super annoying but need to use await since deal helper is async and returns promise
   let pVal1 = await dealHelper(pc1, true);
   sumPlayer += pVal1;
-  updateTotal(pTotal, pVal1);
+  updateTotal(pDisplayedTotal, pVal1);
   usedCards.push(pc1);
 
   let dVal1 = await dealHelper(dc1, true);
   sumDealer += dVal1;
-  updateTotal(dTotal, dVal1);
+  updateTotal(dDisplayedTotal, dVal1);
   usedCards.push(dc1);
 
   let pVal2 = await dealHelper(pc2, true);
   sumPlayer += pVal2;
-  updateTotal(pTotal, pVal2);
+  updateTotal(pDisplayedTotal, pVal2);
   usedCards.push(pc2);
 
-  let dVal2 = await dealHelper(dc2, false);
+  dVal2 = await dealHelper(dc2, false);
   sumDealer += dVal2;
   // Use dc2Cover.remove to "flip" once player is out of moves
   dc2Cover = document.getElementsByClassName("copy")[0];
   usedCards.push(dc2);
 
-  // TODO: handle blackjack logic
   if (pVal1 + pVal2 == 21){
+    // TODO: player BJ win
+    console.log("PLAYER BLACKJACK");
     endGame();
     return;
   }
@@ -165,7 +168,7 @@ async function startGame(){
     pVal2 = 1;
     pc2.classList.add("ace-is-1");
     sumPlayer -= 10;
-    updateTotal(pTotal, -10);
+    updateTotal(pDisplayedTotal, -10);
   }
 
     bjHit.disabled = false;
@@ -206,12 +209,12 @@ function endGame(){
 
   sumPlayer = 0;
   sumDealer = 0;
-  pTotal.textContent = "Player Total: 0";
-  dTotal.textContent = "Dealer Total: 0";
+  pDisplayedTotal.textContent = "Player Total: 0";
+  dDisplayedTotal.textContent = "Dealer Total: 0";
   usedCards = [];
 }
 
-// Hit functionality, upon bust calls dealer function
+// Hit functionality
 async function hit(){
   if (!playerCanHit){
     bjHit.disabled = true;
@@ -222,7 +225,10 @@ async function hit(){
 
   }
   else {
+    // Player cannot try to split after hitting
+    bjSplit.disabled = true;
     let toHit;
+    // Determine location to place card
     if (window.getComputedStyle(pc3).visibility === "hidden"){
         toHit = pc3;
     }
@@ -254,20 +260,15 @@ async function hit(){
       }
     }
 
-    updateTotal(pTotal, hitVal);
+    updateTotal(pDisplayedTotal, hitVal);
 
-    // TODO: handle player bust logic
     if (sumPlayer > 21){
+      // TODO: dealer win
         await wait (900);
         endGame();
       }
     // TODO: Call dealer action function
   }
-}
-
-// Stand functionality, just calls dealer function
-function stand(){
-  //TODO: Call dealer action function
 }
 
 // Double functionality, calls hit once
@@ -284,7 +285,56 @@ function split(){
 
 }
 
+// Handles dealer actions, stand calls this immediately
+async function dealer(){
+  dc2Cover.remove();
+  updateTotal(dDisplayedTotal, dVal2)
+  if (sumDealer == 21){
+    //TODO: Dealer BJ win
+    console.log("DEALER BLACKJACK");
+    endGame();
+  }
+
+  let dealTarget = 3;
+
+  // Draw until dealer reaches or exceeds 17, or has 5 cards
+  while (sumDealer < 17 && dealTarget <= 5){
+    let curId = `dealerC${dealTarget}`;
+    let dc = document.getElementById(curId);
+
+    let dVal = await dealHelper(dc, true);
+    sumDealer += dVal;
+    updateTotal(dDisplayedTotal, dVal);
+    usedCards.push(dc);
+    dealTarget += 1;
+  }
+
+  // Dealer bust
+  if (sumDealer > 21){
+    //TODO: player win
+    console.log("DEALER BUST");
+  }
+
+  // Dealer closer to BJ
+  else if (sumDealer > sumPlayer && sumDealer <= 21){
+    //TODO: dealer win
+    console.log("DEALER WIN");
+  }
+  // Player closer to BJ
+  else if (sumDealer < sumPlayer && sumPlayer <= 21){
+    //TODO: player win
+    console.log("PLAYER WIN");
+  }
+
+  // Dealer and player bust handled elsewhere
+  else {
+    //TODO: dealer push
+    console.log("DEALER PUSH");
+  }
+  endGame();
+}
+
 bjDeal.addEventListener("click", startGame);
 bjHit.addEventListener("click", hit);
-bjStand.addEventListener("click", stand);
+bjStand.addEventListener("click", dealer);
 bjDouble.addEventListener("click", split);
