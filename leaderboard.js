@@ -71,7 +71,6 @@ function setPlayerScore(scoreToSet) {
 }
 
 function setDeckScore(scoreToSet) {
-    console.log("SETTING DECK");
     if (id == undefined) {
         console.error("Player not yet initialized");
         return;
