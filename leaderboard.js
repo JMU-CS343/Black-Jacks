@@ -43,6 +43,9 @@ function addPlayer(name) {
         localStorage.setItem("id", data.player.id);
         id = localStorage.getItem("id");
         setDeckScore(1);
+        setDay(Date.now());
+        setStreak(1);
+        setPlayerScore(10);
     })
     .catch(error => console.error('Error:', error));
 }
@@ -369,6 +372,7 @@ function streakCounter() {
     getStreak().then(currentStreak => {
       const now = new Date();
       if (!lastTimestamp || lastTimestamp === 0) {
+        localStorage.removeItem("claimedRewardToday");
         setDay(now.getTime());
         setStreak(1);
         displayStreak(1);
@@ -385,11 +389,13 @@ function streakCounter() {
       if (sameDay) {
         streakDisplay.textContent = currentStreak + " day streak";
       } else if (diffInDays === 1) {
+        localStorage.removeItem("claimedRewardToday");
         const newStreak = currentStreak + 1;
         setDay(now.getTime());
         setStreak(newStreak);
         streakDisplay.textContent = newStreak + " day streak";
       } else {
+        localStorage.removeItem("claimedRewardToday");
         setDay(now.getTime());
         setStreak(1);
         streakDisplay.textContent = "1 day streak";
@@ -398,8 +404,57 @@ function streakCounter() {
   });
 }
 
+function reward() {
+  const button = document.getElementById("claim-reward");
+  button.addEventListener("click", () => {
+    getStreak().then(streak => {
+      let reward = streak * 10;
+
+      getInitalData().then(player => {
+        const newScore = player.score + reward;
+        setPlayerScore(newScore);
+        setTimeout(() => {
+          button.style.display = "none";
+          localStorage.setItem("claimedRewardToday", "true");
+          imageUpload(reward);
+          displayer();
+        }, 300);
+      });
+    });
+  });
+}
+
+function imageUpload(amount) {
+  const blur = document.createElement("div");
+  blur.className = "blur";
+
+  const popup = document.createElement("div");
+  popup.className = "popup";
+
+  popup.innerHTML = `
+    <h2>Daily Reward</h2>
+    <p>You claimed <strong>$${amount}</strong> today!</p>
+    <button id="close-popup">Close</button>
+  `;
+
+  document.body.appendChild(blur);
+  document.body.appendChild(popup);
+
+  document.getElementById("close-popup").addEventListener("click", () => {
+    document.body.removeChild(blur);
+    document.body.removeChild(popup);
+  });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   displayer();
   information();
   streakCounter();
+  reward();
+
+  const button = document.getElementById("claim-reward");
+
+  if (localStorage.getItem("claimedRewardToday") === "true") {
+    button.style.display = "none";
+  }
 });
