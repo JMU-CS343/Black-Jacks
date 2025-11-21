@@ -415,7 +415,7 @@ function reward() {
         setTimeout(() => {
           button.style.display = "none";
           localStorage.setItem("claimedRewardToday", "true");
-          imageUpload(reward);
+          imageUploadNew(reward);
           displayer();
         }, 300);
       });
@@ -423,7 +423,7 @@ function reward() {
   });
 }
 
-function imageUpload(amount) {
+function imageUploadNew(amount) {
   const blur = document.createElement("div");
   blur.className = "blur";
 
