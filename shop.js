@@ -350,6 +350,9 @@ function imageUpload(){
   buttonContainer.appendChild(cancel);
 
   cancel.addEventListener("click", () => {
+    money += parseInt(costs["legendary"].substring(1));
+    setPlayerScore(money);
+    moneyDisplay.textContent = `$${money}`;
     document.body.removeChild(blur);
     document.body.removeChild(popup);
     document.removeEventListener('keydown', stopKeyEvent, { capture: true });
