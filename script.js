@@ -47,8 +47,10 @@ let sumSplit = 0;
 let usedCards = [];
 let dc2Cover;
 let playerSplit = false;
+let splitFirstHit = false;
 let playerDouble = false;
 let playerCanHit = true;
+let playerStands = 0;
 
 // Return a promise that forces the calling function to wait
 // for ms time before proceeding
@@ -236,6 +238,23 @@ async function endGame(endMessage, moneyMessage){
   });
 
   // Actual gameplay cleanup
+  // Reset overwritten fields
+  pc1 = document.getElementById("playerC1");
+  pc2 = document.getElementById("playerC2");
+  pc3 = document.getElementById("playerC3");
+  pc4 = document.getElementById("playerC4");
+  pc5 = document.getElementById("playerC5");
+  pDisplayedTotal = document.getElementById("player-total");
+
+  // sc1 = document.getElementById("player-splitC1");
+  // sc2 = document.getElementById("player-splitC2");
+  // sc3 = document.getElementById("player-splitC3");
+  // sc4 = document.getElementById("player-splitC4");
+  // sc5 = document.getElementById("player-splitC5");
+  // sDisplayedTotal = document.getElementById("player-split-total");
+
+
+
   bjDeal.disabled = false;
   bjHit.disabled = true;
   bjSplit.disabled = true;
@@ -260,68 +279,91 @@ async function endGame(endMessage, moneyMessage){
   playerCanHit = true;
   playerDouble = false;
   playerSplit = false;
-
+  splitFirstHit = false;
+  playerStands = 0;
+  
   sumPlayer = 0;
   sumDealer = 0;
   sumSplit = 0;
+  console.log("GOOD");
   pDisplayedTotal.textContent = "Player Total: 0";
   dDisplayedTotal.textContent = "Dealer Total: 0";
   sDisplayedTotal.textContent = "Player Split Total: 0";
   usedCards = [];
+  
+  bjHit.addEventListener("click", regHit);
 }
 
-async function hit(){
+async function hit(split = false){
   if (!playerCanHit){
     bjHit.disabled = true;
     return;
   }
-  // TODO: Special logic for split cards
-  if (playerSplit){
-
+  let aceSearchStr = "player";
+  
+  // Helps preserve general logic when called for split cards
+  if (split){
+    console.log("BAD");
+    pc2 = sc2;
+    pc3 = sc3;
+    pc4 = sc4;
+    pc5 = sc5;
+    sumPlayer = sumSplit;
+    pDisplayedTotal = sDisplayedTotal;
+    aceSearchStr = "split";
   }
-  else {
-    // Player cannot try to split after hitting
-    bjSplit.disabled = true;
-    let toHit;
-    // Determine location to place card
-    if (window.getComputedStyle(pc3).visibility === "hidden"){
-        toHit = pc3;
-    }
-    else if (window.getComputedStyle(pc4).visibility === "hidden"){
-        toHit = pc4;
-    }
-    else if (window.getComputedStyle(pc5).visibility === "hidden"){
-        toHit = pc5;
-        playerCanHit = false;
-    }
-    else{
-      console.error("Player and dealer stand on 5");
-    }
-    
-    let hitVal = await dealHelper(toHit, true);
-    sumPlayer += hitVal;
-    usedCards.push(toHit);
 
-    if (sumPlayer > 21){
-      for (let val of usedCards){
-        if (val.classList.contains("ace") &&
-            val.classList.contains("player") &&
-            !val.classList.contains("ace-is-1")){
-              sumPlayer -= 10;
-              hitVal -= 10;
-              val.classList.add("ace-is-1");
-          break;
-        }
+  let toHit;
+  // Determine location to place card
+  if (splitFirstHit == true) {
+    toHit = pc2;
+    splitFirstHit = false;
+  }
+  else if (window.getComputedStyle(pc3).visibility === "hidden"){
+      toHit = pc3;
+  }
+  else if (window.getComputedStyle(pc4).visibility === "hidden"){
+      toHit = pc4;
+  }
+  else if (window.getComputedStyle(pc5).visibility === "hidden"){
+      toHit = pc5;
+      playerCanHit = false;
+  }
+  else{
+    console.error("Player and dealer stand on 5");
+  }
+
+  // Only search split list for aces
+  if (split) {
+    toHit.classList.add("split");
+    toHit.classList.remove("player");
+  }
+  
+  let hitVal = await dealHelper(toHit, true);
+  sumPlayer += hitVal;
+  usedCards.push(toHit);
+
+  if (sumPlayer > 21){
+    for (let val of usedCards){
+      if (val.classList.contains("ace") &&
+          val.classList.contains(aceSearchStr) &&
+          !val.classList.contains("ace-is-1")){
+            sumPlayer -= 10;
+            hitVal -= 10;
+            val.classList.add("ace-is-1");
+        break;
       }
     }
+  }
 
-    updateTotal(pDisplayedTotal, hitVal);
+  updateTotal(pDisplayedTotal, hitVal);
 
-    if (sumPlayer > 21){
-      // TODO: dealer win
-        //Say username instead of player, replace money later
-        endGame(`Player bust. P: ${sumPlayer} Dealer wins!`, `Player lost $0`);
-      }
+  if (sumPlayer > 21){
+    if (split){
+      //TODO: handle bust logic, keep track of how player lost and loss amount and pass to dealer func later
+    }
+    //Say username instead of player, replace money later
+    endGame(`Player bust. P: ${sumPlayer} Dealer wins!`, `Player lost $0`);
   }
 }
 
@@ -335,9 +377,15 @@ async function double(){
 }
 
 function split(){
+  bjSplit.disabled = true;
+  // I don't want to implement split double tbh
+  bjDouble.disabled = true;
+  playerSplit = true;
+  splitFirstHit = true;
   sc1.style.visibility = "visible";
   sc1.innerHTML = pc2.innerHTML;
   sc1.className = pc2.className;
+  usedCards.push(sc1);
   
   // Handle reset of old location
   pc2.style.visibility = "hidden";
@@ -349,6 +397,18 @@ function split(){
   sDisplayedTotal.style.visibility = "visible";
   updateTotal(sDisplayedTotal, pVal2);
   sumSplit += pVal2;
+}
+
+function stand(){
+  playerStands += 1;
+  splitFirstHit = true;
+  if (playerStands == 2 || playerSplit == false){
+    dealer();
+  }
+  else {
+    bjHit.removeEventListener("click", regHit);
+    bjHit.addEventListener("click", () => {hit(true);});
+  }
 }
 
 async function dealer(){
@@ -369,12 +429,34 @@ async function dealer(){
 
     let dVal = await dealHelper(dc, true);
     sumDealer += dVal;
+    // Check dealer aces
+    if (sumDealer > 17){
+      for (let val of usedCards){
+        if (val.classList.contains("ace") &&
+        val.classList.contains("dealer") &&
+        !val.classList.contains("ace-is-1")){
+          sumDealer -= 10;
+          val.classList.add("ace-is-1");
+          break;
+        }
+      }
+    }
+
     updateTotal(dDisplayedTotal, dVal);
     usedCards.push(dc);
     dealTarget += 1;
   }
 
-  if (sumDealer > 21){
+  if (playerSplit) {
+    endGame("","");
+    //TODO: place if block in a for loop, if split is true loop twice else loop once
+    //first loop tracks first hand ending stats second loop tracks split hand
+    //will need to have 2 string variables to state how each game went
+    //and 1 var to keep track of money
+    //after the loop call end game accordingly, should only be 1 call with custom strings
+  }
+  else if(sumDealer > 21){
+  // if (sumDealer > 21){
     //TODO: player win
     //Say username instead of player, replace money later
     endGame(`Player wins! P: ${sumPlayer} D: ${sumDealer} Dealer bust!`, `Player won $0`);
@@ -403,7 +485,8 @@ async function dealer(){
 }
 
 bjDeal.addEventListener("click", startGame);
-bjHit.addEventListener("click", hit);
-bjStand.addEventListener("click", dealer);
+let regHit = () => {hit(false);};
+bjHit.addEventListener("click", regHit);
+bjStand.addEventListener("click", stand);
 bjDouble.addEventListener("click", double);
 bjSplit.addEventListener("click", split);
