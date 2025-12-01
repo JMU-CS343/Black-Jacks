@@ -647,13 +647,14 @@ body {
 
 .popup {
   position: fixed; 
-  width: 500px; 
-  height: 500px; 
+  width: 40%; 
+  height: 60%; 
   margin: auto; 
   background-color: rgb(194, 217, 255); 
   border: 5px solid black; 
   border-radius: 15px; 
   display: flex; 
+  place-self: center;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -661,7 +662,7 @@ body {
 }
 
 .popupTitle {
-  font-size: 25px;
+  font-size: 1.4rem;
   color: black;
   margin-bottom: 30px;
 }
@@ -906,4 +907,268 @@ button.inverse {
 
 .end-replay:hover{
   background-color: green;
+}
+
+#mobile-nav {
+  display: none;
+}
+
+@media (max-width: 430px) {
+  body {
+    border: none;
+    align-items: flex-start;
+    justify-content: flex-start;
+    overflow: scroll;
+    height: 100vh;
+    width: 100vw;
+    padding-top: 50px;
+    display: block;
+  }
+
+  aside, #main-aside {
+    display: block;
+    width: 100%;
+    height: calc(100vh - 50px);
+    padding: 0;
+    margin: 0;
+  }
+
+  #deck-area {
+    width: 100%;
+    height: 100%;
+    overflow: scroll;
+  }
+
+  /* Something wrong with this, taking up too much height */
+  #game-area {
+    display: flex;
+    flex-direction: column;
+    height: calc(100% - 60px);
+    justify-content: space-between; 
+    align-items: center;
+  }
+
+  #leaderboard-area {
+    width: 100%;
+    height: 100%;
+    overflow: scroll;
+  }
+
+  #table {
+    display: grid;
+    margin: 0;
+    place-self: center;
+    height: 45%;
+    width: 80%;
+  }
+
+  #deck-area, #leaderboard-area {
+    display: none;
+  }
+
+  #top-nav{
+    width: 100%;
+  }
+  #top-nav .nav-link {
+    font-size: x-small;
+  }
+
+  #top-nav nav{
+    gap: 5vw;
+    align-items: left;
+    justify-content: center;
+  }
+
+  #mobile-nav {
+    margin-top: 3vh;
+    background-color: black;
+    border-bottom: 2px solid white;
+    border-top: 2px solid white;
+    display: flex;
+    position: block;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    justify-content: center;
+  }
+
+  .card, #dealerC2 {
+    /* Remove this when done */
+    visibility: visible;
+    height: 15vw;
+    width: 9vw;
+    position: relative;
+  }
+
+  #dealerC5 {
+  position:absolute;
+  top: -50px;
+  left: -100px;
+  }
+
+  #dealerC4 {
+    position:absolute;
+    top: -50px;
+    left: -50px;
+  }
+
+  #dealerC3 {
+    position:absolute;
+    top: -50px;
+    left: 00px;
+  }
+
+  #dealerC2 {
+    position:absolute;
+    top: -50px;
+    left: 50px;
+  }
+
+  #dealerC1 {
+    position:absolute;
+    top: -50px;
+    left: 100px;
+  }
+
+  .dealer-deck {
+    position: relative;
+    left: 90px;
+    top: 10px;
+    height: 15vw;
+    width: 9vw;
+  }
+
+  #dealer-total{
+    font-size: small;
+    position: absolute;
+    top: 65px;
+    left: 100px;
+    width: 8vw;
+  }
+
+  .copy {
+  position: absolute;
+  z-index: 20;
+  transition: transform 1s ease-in-out;
+}
+
+  #player-split{
+    position: relative;
+    visibility: hidden;
+  }
+
+  #player-splitC5{
+    position: absolute;
+    top: -130px;
+    left: -55px;
+  }
+
+  #player-splitC4{
+    position: absolute;
+    top: -110px;
+    left: -45px;
+  }
+
+  #player-splitC3{
+    position: absolute;
+    top: -90px;
+    left: -35px;
+  }
+
+  #player-splitC2{
+    position: absolute;
+    top: -70px;
+    left: -25px;
+  }
+
+  #player-splitC1{
+    position: absolute;
+    top: -50px;
+    left: -15px;
+  }
+
+  #player-split-total{
+    font-size: small;
+    position: absolute;
+    width: 12vw;
+    top: -30px;
+    left: 20px;
+  }
+
+  #player{
+    position: relative;
+  }
+
+  #playerC5{
+    position: absolute;
+    top: -130px;
+    left: -90px;
+  }
+
+  #playerC4{
+    position: absolute;
+    top: -110px;
+    left: -80px;
+  }
+
+  #playerC3{
+    position: absolute;
+    top: -90px;
+    left: -70px;
+  }
+
+  #playerC2{
+    position: absolute;
+    top: -70px;
+    left: -60px;
+  }
+
+  #playerC1{
+    position: absolute;
+    top: -50px;
+    left: -50px;
+  }
+
+  #player-total{
+    font-size: small;
+    position: absolute;
+    top: -30px;
+    left: -10px;
+    width: 8vw;
+  }
+
+  .primary-button{
+    width: 23vw;
+    height: 8vh;
+    font-size: medium;
+    margin: 3vh 4vw;
+  }
+
+  .secondary-button{
+    width: 24vw;
+    height: 5vh;
+    font-size: small;
+    margin: 0 4vw;
+  }
+
+  #deal-button{
+    width: 28vw;
+    font-size: x-large;
+  }
+
+  .deck-option {
+    height: 20vw;
+    width: 15vw;
+  }
+
+  .popup {
+    margin-top: 0;
+    top: 150px;
+    width: 80vw;
+  }
+
+  .popup > h3:first-child {
+    margin-top: 0;
+  }
 }

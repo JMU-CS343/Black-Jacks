@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="UTF-8">
   <title>Home - Black-Jacks</title>
   <link rel="stylesheet" href="styles.css">
 </head>
@@ -15,7 +15,7 @@
       <a href="information.html" class="nav-link">Players</a>
     </nav>
   </header>
-  <aside>
+  <aside id="main-aside">
     <aside id="deck-area">
       <nav>
         <ul>
@@ -89,7 +89,6 @@
       </section>
 
       <section id="buttons">
-        <!-- Primary buttons are always visible -->
         <button class="primary-button action-button" id="hit-button">HIT</button>
         <!-- No additional class, only usable once per game -->
         <button id="deal-button">DEAL</button>
@@ -121,7 +120,16 @@
         <button id="claim-reward">Claim Reward</button>
       </div>
     </aside>
+    <nav id="mobile-nav">
+      <button data-target="left" class="mobile-button">Decks</button>
+      <button data-target="center" class="mobile-button" disabled>Game</button>
+      <button data-target="right" class="mobile-button">Leaderboard</button>
+    </nav>
   </aside>
+
+  <!-- LOAD MOBILE SUPPORT -->
+   <script src="mobile.js"></script>
+
   <!-- LOAD CARD SCRIPTS -->
   <script src="animation.js"></script>
   <script src="cardsVisual.js"></script>
@@ -135,7 +143,6 @@
   <script src="leaderboard.js"></script>
   <script src="script.js"></script>
   <script src="game.js"></script>
-
   <script src="shortcut.js"></script>
 </body>
 </html>
