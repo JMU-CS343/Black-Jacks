@@ -246,15 +246,6 @@ async function endGame(endMessage, moneyMessage){
   pc5 = document.getElementById("playerC5");
   pDisplayedTotal = document.getElementById("player-total");
 
-  // sc1 = document.getElementById("player-splitC1");
-  // sc2 = document.getElementById("player-splitC2");
-  // sc3 = document.getElementById("player-splitC3");
-  // sc4 = document.getElementById("player-splitC4");
-  // sc5 = document.getElementById("player-splitC5");
-  // sDisplayedTotal = document.getElementById("player-split-total");
-
-
-
   bjDeal.disabled = false;
   bjHit.disabled = true;
   bjSplit.disabled = true;
