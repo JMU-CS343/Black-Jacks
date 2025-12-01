@@ -8,6 +8,13 @@ const warning = document.getElementById("warning");
 const invalidIdWarning = document.getElementById("invalidIdWarning");
 const alternative = document.getElementById("alternative");
 const createAccount = document.getElementById("createAccount");
+const customDecks = document.getElementById("customDecks");
+
+const deck1 = document.getElementById("favDeck-1");
+const deck2 = document.getElementById("favDeck-2");
+const deck3 = document.getElementById("favDeck-3");
+
+const lastUsed = document.getElementById("lastUsedDecks");
 
 let id = localStorage.getItem("id");
 const TOKEN = "dqhzyddctffje";
@@ -102,6 +109,28 @@ function init() {
             idInput.style = "display:none;";
             createAccount.style = "display:none;"
             alternative.style="display:none;"
+            customDecks.style="display:block";
+            customDecks.textContent = `Custom decks purchased: ${JSON.parse(localStorage.getItem("custom decks")).length}`;
+            deck1.style="display:block;";
+            deck2.style="display:block;";
+            deck3.style="display:block;";
+            lastUsed.style="display:block;";
+            let deck1Id = localStorage.getItem("deck-1");
+            let deck2Id = localStorage.getItem("deck-2");
+            let deck3Id = localStorage.getItem("deck-3");
+
+            function findName(id) {
+                if (id >= decks.length - 1) {
+                    let custom = JSON.parse(localStorage.getItem("custom decks"));
+                    return custom[id - decks.length + 1].name;
+                } else {
+                    return decks[id].title;
+                }
+            }
+
+            deck1.textContent=`1. ${findName(deck1Id)}`;
+            deck2.textContent=`2. ${findName(deck2Id)}`;
+            deck3.textContent=`3. ${findName(deck3Id)}`;
         });
     } else {
         usernameField.textContent = "Please enter your ID to sign in"
@@ -111,6 +140,11 @@ function init() {
         idInput.style = "display:block;";
         createAccount.style = "display:block;margin:auto;"
         alternative.style="display:block;"
+        customDecks.style="display:none;"
+        deck1.style="display:none;";
+        deck2.style="display:none;";
+        deck3.style="display:none;";
+        lastUsed.style="display:none;";
     }
 }
 init();

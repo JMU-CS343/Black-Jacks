@@ -213,10 +213,10 @@ li > button {
 
 .dealer-deck {
   position: relative;
+  background-color: grey;
   left: 300px;
   top: -40px;
   transform: rotate(30deg);
-  background-color: gray;
   height: 11vh;
   width: 4vw;
   border: 2px;

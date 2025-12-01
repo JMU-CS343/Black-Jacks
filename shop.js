@@ -2,74 +2,6 @@ const shop = document.getElementById("shop");
 const commons = document.getElementById("commons");
 const rares = document.getElementById("rares");
 const legendaries = document.getElementById("legendaries");
-const decks = [
-    {
-        "title": "default",
-        "rarity": "common"
-    },
-    {
-        "title": "blue",
-        "rarity": "common"
-    },
-    {
-        "title": "red",
-        "rarity": "common"
-    },
-    {
-        "title": "green",
-        "rarity": "common"
-    },
-    {
-        "title": "yellow",
-        "rarity": "common"
-    },
-    {
-        "title": "white",
-        "rarity": "common"
-    },
-    {
-        "title": "purple",
-        "rarity": "uncommon"
-    },
-    {
-        "title": "maroon",
-        "rarity": "uncommon"
-    },
-    {
-        "title": "hot pink",
-        "rarity": "uncommon"
-    },
-    {
-        "title": "eggshell",
-        "rarity": "uncommon"
-    },
-    {
-        "title": "chromatic",
-        "rarity": "rare"
-    },
-    {
-        "title": "metallic",
-        "rarity": "rare"
-    },
-    {
-        "title": "glass",
-        "rarity": "rare"
-    },
-    {
-        "title": "jmu",
-        "rarity": "epic"
-    },
-    {
-        "title": "golden",
-        "rarity": "epic"
-    },
-    {
-        "title": "custom",
-        "rarity": "legendary"
-    },
-]
-
-const costs = {"common": "$250", "uncommon": "$500", "rare": "$2000", "epic": "$5000", "legendary": "$15000"};
 
 let selected = localStorage.getItem("selectedDeck");
 if (selected == null) {
@@ -130,7 +62,6 @@ function shopInit() {
 }
 
 function selectDeck(id, i) {
-    // console.log(id);
     for (let deck of decks) {
         const element = document.getElementById(`deck-${deck.title}`);
         if (element != null) {
@@ -146,6 +77,25 @@ function selectDeck(id, i) {
     }
     document.getElementById(id).classList.add("selectedDeck");
     localStorage.setItem("selectedDeck", i);
+
+    const deck1 = localStorage.getItem("deck-1");
+    const deck2 = localStorage.getItem("deck-2");
+    const deck3 = localStorage.getItem("deck-3");
+
+    if (deck1 != i) {
+        if (deck2 == i) {
+            localStorage.setItem("deck-1", deck2);
+            localStorage.setItem("deck-2", deck1);
+        } else if (deck3 == i) {
+            localStorage.setItem("deck-1", deck3);
+            localStorage.setItem("deck-2", deck1);
+            localStorage.setItem("deck-3", deck2);
+        } else {
+            localStorage.setItem("deck-1", i);
+            localStorage.setItem("deck-2", deck1);
+            localStorage.setItem("deck-3", deck2);
+        }
+    }
 }
 
 function deckInit() {
