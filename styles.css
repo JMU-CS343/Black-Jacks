@@ -914,6 +914,7 @@ button.inverse {
 }
 
 @media (max-width: 430px) {
+  /* Index */
   body {
     border: none;
     align-items: flex-start;
@@ -925,6 +926,7 @@ button.inverse {
     display: block;
   }
 
+  /* 3 main columns of index */
   aside, #main-aside {
     display: block;
     width: 100%;
@@ -944,7 +946,6 @@ button.inverse {
     display: flex;
     flex-direction: column;
     height: calc(100% - 60px);
-    justify-content: space-between; 
     align-items: center;
   }
 
@@ -979,6 +980,7 @@ button.inverse {
     justify-content: center;
   }
 
+  /* Toggle between main columns */
   #mobile-nav {
     margin-top: 3vh;
     background-color: black;
@@ -993,9 +995,8 @@ button.inverse {
     justify-content: center;
   }
 
+  /* Game style changes */
   .card, #dealerC2 {
-    /* Remove this when done */
-    visibility: visible;
     height: 15vw;
     width: 9vw;
     position: relative;
@@ -1034,7 +1035,7 @@ button.inverse {
   .dealer-deck {
     position: relative;
     left: 90px;
-    top: 10px;
+    top: 25px;
     height: 15vw;
     width: 9vw;
   }
@@ -1042,7 +1043,7 @@ button.inverse {
   #dealer-total{
     font-size: small;
     position: absolute;
-    top: 65px;
+    top: 75px;
     left: 100px;
     width: 8vw;
   }
@@ -1157,6 +1158,11 @@ button.inverse {
     font-size: x-large;
   }
 
+  .end-title {
+    font-size: 2.8rem;
+    align-self: center;
+  }
+
   .deck-option {
     height: 20vw;
     width: 15vw;
@@ -1170,5 +1176,33 @@ button.inverse {
 
   .popup > h3:first-child {
     margin-top: 0;
+  }
+
+  /* Other pages changes */
+  .knowledge {
+    /* height: 100%; */
+    overflow: scroll;
+  }
+
+  .info-heading {
+    font-size: x-large;
+  }
+
+  .info-labels {
+    font-size: small;
+  }
+
+  #data-linker {
+    width: 100%;
+    font-size: small;
+  }
+
+  #players-list{
+    overflow: scroll;
+  }
+
+  #profileContainer > button {
+    width: 25vw;
+    font-size: medium;
   }
 }
