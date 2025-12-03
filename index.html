@@ -126,6 +126,22 @@
     </nav>
   </aside>
 
+  <div id="chip-area">
+    <div id="left-chips">
+      <button class="chip" data-value="10">$10</button>
+      <button class="chip" data-value="5">$5</button>
+      <button class="chip" data-value="3">$3</button>
+      <button class="chip" data-value="1">$1</button>
+    </div>
+    <div id="right-chips">
+      <button class="chip" data-value="500">$500</button>
+      <button class="chip" data-value="100">$100</button>
+      <button class="chip" data-value="50">$50</button>
+      <button class="chip" data-value="25">$25</button>
+    </div>
+    <p id="currency">Betting: $<span id="current-bet">0</span></p>
+  </div>
+
   <!-- LOAD MOBILE SUPPORT -->
    <script src="mobile.js"></script>
 
@@ -144,5 +160,23 @@
   <script src="script.js"></script>
   <script src="game.js"></script>
   <script src="shortcut.js"></script>
+
+  <!-- Mobile view will hide the chips when the other sections are clicked. -->
+  <script>
+    const chipArea = document.getElementById("chip-area");
+    const decksBtn = document.querySelector('button[data-target="left"]');
+    const gameBtn = document.querySelector('button[data-target="center"]');
+    const leaderboardBtn = document.querySelector('button[data-target="right"]');
+    decksBtn.addEventListener("click", () => {
+      chipArea.classList.add("hidden")
+    });
+    leaderboardBtn.addEventListener("click", () => {
+      chipArea.classList.add("hidden")
+    });
+    gameBtn.addEventListener("click", () => {
+      chipArea.classList.remove("hidden")
+    });
+  </script>
+
 </body>
 </html>
