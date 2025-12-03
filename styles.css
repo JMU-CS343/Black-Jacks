@@ -925,7 +925,7 @@ button.inverse {
 
 #left-chips {
   position: absolute;
-  left: 30px;
+  left: 175px;
   bottom: -30px;
   display: flex;
   flex-direction: column;
@@ -934,7 +934,7 @@ button.inverse {
 
 #right-chips {
   position: absolute;
-  right: -660px;
+  left: 990px;
   bottom: -30px;
   display: flex;
   flex-direction: column;
@@ -953,8 +953,8 @@ button.inverse {
 
 #currency {
   position: absolute;
-  top: -30px;
-  left: 18%;
+  bottom: 40px;
+  left: 930px;
   transform: translateX(-50%);
 }
 
@@ -983,16 +983,16 @@ button.inverse {
     position: static;
     flex-direction: row;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 5px;
     justify-content: center;
     width: 100%;
   }
   
   .chip {
-    width: 45px;
-    height: 45px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
-    font-size: 11px;
+    font-size: xsmall;
     background: black;
     border: 5px dashed white;
     color: white;
