@@ -997,6 +997,7 @@ button.inverse {
 
   /* Game style changes */
   .card, #dealerC2 {
+    visibility: visible;
     height: 15vw;
     width: 9vw;
     position: relative;
