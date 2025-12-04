@@ -923,8 +923,8 @@ button.inverse {
 
 #left-chips {
   position: absolute;
-  left: 175px;
-  bottom: -30px;
+  left: 25px;
+  bottom: 20px;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -932,8 +932,8 @@ button.inverse {
 
 #right-chips {
   position: absolute;
-  left: 990px;
-  bottom: -30px;
+  left: 850px;
+  bottom: 20px;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
