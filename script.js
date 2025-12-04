@@ -1,3 +1,13 @@
+let uname; 
+
+function init() {
+    getInitalData().then(data => {
+        money = data.score;
+        uname = data.name;
+    });
+}
+init();
+
 // Retrieve buttons
 let bjHit = document.getElementById("hit-button");
 let bjSplit = document.getElementById("split-button");
@@ -5,9 +15,22 @@ let bjStand = document.getElementById("stand-button");
 let bjDouble = document.getElementById("double-button");
 let bjDeal = document.getElementById("deal-button");
 
+// Retrieve chips
+let oneChip = document.getElementById("one");
+let threeChip = document.getElementById("three");
+let fiveChip = document.getElementById("five");
+let tenChip = document.getElementById("ten");
+let twentyfiveChip = document.getElementById("twentyfive");
+let fiftyChip = document.getElementById("fifty");
+let onehundredChip = document.getElementById("onehundred");
+let fivehundredChip = document.getElementById("fivehundred");
+
+let chips = [oneChip, threeChip, fiveChip, tenChip, twentyfiveChip, fiftyChip, onehundredChip, fivehundredChip];
+
 const chipArea = document.getElementById("chip-area");
 const currency = document.getElementById("currency");
 
+bjDeal.disabled = true;
 bjHit.disabled = true;
 bjSplit.disabled = true;
 bjStand.disabled = true;
@@ -35,9 +58,7 @@ let dc1 = document.getElementById("dealerC1");
 let dc2 = document.getElementById("dealerC2");
 let dDisplayedTotal = document.getElementById("dealer-total");
 
-// Need this to be global becasue accessed by both deal and split
 let pVal2;
-// Need these to be global becasue it is accessed by both deal and dealer
 let dVal2;
 let sTotal = document.getElementById("player-split-total");
 
@@ -45,7 +66,6 @@ let sTotal = document.getElementById("player-split-total");
 let sumPlayer = 0;
 let sumDealer = 0;
 let sumSplit = 0;
-// Tracks which cards were dealt to make game reset easier
 let usedCards = [];
 let dc2Cover;
 let playerSplit = false;
@@ -55,13 +75,8 @@ let playerCanHit = true;
 let playerStands = 0;
 
 // Player-specific globals
-// Figure out how to fix this
-let uname;
-//let uname = document.getElementById("username").textContent;
-if (uname == null || uname == "")
-  uname = "Player";
 let betAmnt = 0;
-let payout = 0;
+let betPayout = 0;
 
 // Return a promise that forces the calling function to wait
 // for ms time before proceeding
@@ -84,58 +99,19 @@ async function dealHelper(playerCard, removeCover) {
   playerCard.style.visibility = 'visible';
   let cardValue;
   switch (number) {
-    case "ACE":
-      ace(playerCard, suit);
-      cardValue = 11;
-      break;
-    case "2":
-      two(playerCard, suit);
-      cardValue = 2;
-      break;
-    case "3":
-      three(playerCard, suit);
-      cardValue = 3;
-      break;
-    case "4":
-      four(playerCard, suit);
-      cardValue = 4;
-      break;
-    case "5":
-      five(playerCard, suit);
-      cardValue = 5;
-      break;
-    case "6":
-      six(playerCard, suit);
-      cardValue = 6;
-      break;
-    case "7":
-      seven(playerCard, suit);
-      cardValue = 7;
-      break;
-    case "8":
-      eight(playerCard, suit);
-      cardValue = 8;
-      break;
-    case "9":
-      nine(playerCard, suit);
-      cardValue = 9;
-      break;
-    case "10":
-      ten(playerCard, suit);
-      cardValue = 10;
-      break;
-    case "JACK":
-      faceHelper(playerCard, number, suit);
-      cardValue = 10;
-      break;
-    case "QUEEN":
-      faceHelper(playerCard, number, suit);
-      cardValue = 10;
-      break;
-    case "KING":
-      faceHelper(playerCard, number, suit);
-      cardValue = 10;
-      break;
+    case "ACE": ace(playerCard, suit); cardValue = 11; break;
+    case "2": two(playerCard, suit); cardValue = 2; break;
+    case "3": three(playerCard, suit); cardValue = 3; break;
+    case "4": four(playerCard, suit); cardValue = 4; break;
+    case "5": five(playerCard, suit); cardValue = 5; break;
+    case "6": six(playerCard, suit); cardValue = 6; break;
+    case "7": seven(playerCard, suit); cardValue = 7; break;
+    case "8": eight(playerCard, suit); cardValue = 8; break;
+    case "9": nine(playerCard, suit); cardValue = 9; break;
+    case "10": ten(playerCard, suit); cardValue = 10; break;
+    case "JACK": faceHelper(playerCard, number, suit); cardValue = 10; break;
+    case "QUEEN": faceHelper(playerCard, number, suit); cardValue = 10; break;
+    case "KING": faceHelper(playerCard, number, suit); cardValue = 10; break;
   }
   return cardValue;
 }
@@ -148,15 +124,26 @@ function updateTotal(counter, value){
   counter.textContent = strs.join(": ");
 }
 
-// Preliminary blackjack actions: deal to player and dealer,
-// check for blackjack, update total values,
-// prompt player for follow-up action (hit, stand, double, split if possible)
+// Preliminary blackjack actions
 
-// Eventually add arg for betAmnt
+function betHelper(value){
+  console.log(money);
+  value = parseInt(value);
+  if (money - value >= 0){
+    money -= value;
+    betAmnt += value;
+    console.log(betAmnt);
+    document.getElementById("currency").textContent = `Betting: $${betAmnt}`;
+    bjDeal.disabled = false;
+  }
+  else {
+    alert("Insufficent funds");
+  }
+}
+
 async function startGame(){
+  chips.forEach(chip => {chip.disabled = true;});
   bjDeal.disabled = true;
-
-  // await shuffleDeck();
 
   // Super annoying but need to use await since deal helper is async and returns promise
   let pVal1 = await dealHelper(pc1, true);
@@ -180,9 +167,7 @@ async function startGame(){
   usedCards.push(dc2);
 
   if (pVal1 + pVal2 == 21){
-    // TODO: player BJ win
-    //Say username instead of player, replace money later
-    endGame(`Blackjacks! Player wins! D: ${sumDealer}`, `Player wins $0`);
+    endGame(`Blackjacks! ${uname} wins! D: ${sumDealer}`, `${uname} wins $${betAmnt * 3}`);
     return;
   }
   
@@ -196,11 +181,17 @@ async function startGame(){
 
   bjHit.disabled = false;
   bjStand.disabled = false;
-  bjDouble.disabled = false;
+
+  // Can only double if sufficent funds
+  let canDouble = false;
+  if (money - betAmnt >= 0){
+    bjDouble.disabled = false;
+    canDouble = true;
+  }
   
-  //Move back into if when done testing
-  bjSplit.disabled = false;
-  if (pVal1 == pVal2){
+  //Move in and out of if during testing
+  if (pVal1 == pVal2 && canDouble){
+    bjSplit.disabled = false;
   }
 }
 
@@ -263,11 +254,12 @@ async function endGame(endMessage, moneyMessage){
   pc5 = document.getElementById("playerC5");
   pDisplayedTotal = document.getElementById("player-total");
 
-  bjDeal.disabled = false;
+  bjDeal.disabled = true;
   bjHit.disabled = true;
   bjSplit.disabled = true;
   bjStand.disabled = true;
   bjDouble.disabled = true;
+  chips.forEach(chip => {chip.disabled = false;});
 
   usedCards.forEach(used => {
     if (used.classList.contains("player")){
@@ -281,7 +273,6 @@ async function endGame(endMessage, moneyMessage){
   });
 
   sTotal.style.visibility = "hidden";
-
   dc2Cover.remove();
 
   playerCanHit = true;
@@ -299,8 +290,10 @@ async function endGame(endMessage, moneyMessage){
   usedCards = [];
 
   betAmnt = 0;
-  payout = 0;
+  betPayout = 0;
+  document.getElementById("currency").textContent = `Betting: $${betAmnt}`;
   
+  bjHit.removeEventListener("click", splitHitWrapper);
   bjHit.addEventListener("click", regHit);
 }
 
@@ -309,80 +302,98 @@ async function hit(split = false){
     bjHit.disabled = true;
     return;
   }
-  let aceSearchStr = "player";
-  
-  // Helps preserve general logic when called for split cards
-  if (split){
-    pc2 = sc2;
-    pc3 = sc3;
-    pc4 = sc4;
-    pc5 = sc5;
-    sumPlayer = sumSplit;
-    pDisplayedTotal = sDisplayedTotal;
-    aceSearchStr = "split";
-  }
 
-  let toHit;
-  // Determine location to place card
-  if (splitFirstHit == true) {
-    toHit = pc2;
+  // Main hand values or or split hand values
+  let currentSum = split ? sumSplit : sumPlayer;
+  let currentDisplay = split ? sDisplayedTotal : pDisplayedTotal;
+  let aceSearchStr = split ? "split" : "player";
+  let cards = split ? [sc1, sc2, sc3, sc4, sc5] : [pc1, pc2, pc3, pc4, pc5];
+
+  let toHit = null;
+
+  // If split need to place in slot 2
+  if (splitFirstHit) {
+    toHit = cards[1];
     splitFirstHit = false;
-  }
-  else if (window.getComputedStyle(pc3).visibility === "hidden"){
-      toHit = pc3;
-  }
-  else if (window.getComputedStyle(pc4).visibility === "hidden"){
-      toHit = pc4;
-  }
-  else if (window.getComputedStyle(pc5).visibility === "hidden"){
-      toHit = pc5;
-      playerCanHit = false;
-  }
-  else{
-    console.error("Player and dealer stand on 5");
+  } 
+  else {
+    // Loop until destination found
+    for (let i = 2; i < cards.length; i++) {
+        if (window.getComputedStyle(cards[i]).visibility === "hidden") {
+            toHit = cards[i];
+            break;
+        }
+    }
   }
 
-  // Only search split list for aces
+  // If hand is full, stop
+  if (!toHit) {
+      if (!split) playerCanHit = false;
+      return;
+  }
+
+  // Mark card properly
   if (split) {
     toHit.classList.add("split");
     toHit.classList.remove("player");
+  } else {
+    toHit.classList.add("player");
   }
   
   let hitVal = await dealHelper(toHit, true);
-  sumPlayer += hitVal;
+  
+  // Update global variables and keep track of current sum
+  if (split) {
+      sumSplit += hitVal;
+      currentSum = sumSplit;
+  } else {
+      sumPlayer += hitVal;
+      currentSum = sumPlayer;
+  }
+  
   usedCards.push(toHit);
 
-  if (sumPlayer > 21){
+  // Ace logic
+  if (currentSum > 21){
     for (let val of usedCards){
       if (val.classList.contains("ace") &&
           val.classList.contains(aceSearchStr) &&
           !val.classList.contains("ace-is-1")){
-            sumPlayer -= 10;
+            
+            if (split) sumSplit -= 10;
+            else sumPlayer -= 10;
+            
+            currentSum -= 10; 
             hitVal -= 10;
+            
             val.classList.add("ace-is-1");
         break;
       }
     }
   }
 
-  updateTotal(pDisplayedTotal, hitVal);
-
-  if (sumPlayer > 21){
-    //endGame(`Player bust. P: ${sumPlayer} Dealer wins!`, `Player lost $0`);
+  updateTotal(currentDisplay, hitVal);
+  if (currentSum > 21){
+    stand();
   }
 }
 
 async function double(){
   playerDouble = true;
   bjHit.disabled = true;
+  money - betAmnt;
+  betAmnt *= 2;
+  console.log("Split amount " + betAmnt);
+  document.getElementById("currency").textContent = `Betting: $${betAmnt}`;
   // await prevents synch issues
   await hit();
-  //TODO: Use playerDouble to track money adjustments
   dealer()
 }
 
 function split(){
   bjSplit.disabled = true;
+  money - betAmnt;
+  document.getElementById("currency").textContent = `Betting: $${betAmnt + betAmnt}`;
   // I don't want to implement split double tbh
   bjDouble.disabled = true;
   playerSplit = true;
@@ -390,8 +401,10 @@ function split(){
   sc1.style.visibility = "visible";
   sc1.innerHTML = pc2.innerHTML;
   sc1.className = pc2.className;
+  sc1.classList.add("split");
+  sc1.classList.remove("player");
   usedCards.push(sc1);
-  
+
   // Handle reset of old location
   pc2.style.visibility = "hidden";
   pc2.className = "card player";
@@ -402,29 +415,33 @@ function split(){
   sDisplayedTotal.style.visibility = "visible";
   updateTotal(sDisplayedTotal, pVal2);
   sumSplit += pVal2;
+  let cards = [pc1, pc2, pc3, pc4, pc5];
+  cards.forEach(card => {card.style.borderColor = "yellow";});
 }
 
+// Background change logic is terrible but i dont feel like changing
 function stand(){
   playerStands += 1;
   splitFirstHit = true;
   if (playerStands == 2 || playerSplit == false){
+    let cards = [sc1, sc2, sc3, sc4, sc5];
+    cards.forEach(card => {card.style.borderColor = "black";});
     dealer();
   }
   else {
+    let cards = [pc1, pc2, pc3, pc4, pc5];
+    cards.forEach(card => {card.style.borderColor = "black";});
+    cards = [sc1, sc2, sc3, sc4, sc5];
+    cards.forEach(card => {card.style.borderColor = "yellow";});
+
     bjHit.removeEventListener("click", regHit);
-    bjHit.addEventListener("click", () => {hit(true);});
+    bjHit.addEventListener("click", splitHitWrapper);
   }
 }
 
 async function dealer(){
   dc2Cover.remove();
   updateTotal(dDisplayedTotal, dVal2)
-  if (sumDealer == 21){
-    //TODO: Dealer BJ win
-    //Say username instead of player, replace money later
-    endGame(`Player loses. P: ${sumPlayer} Dealer had blackjack!`, `Player lost $0`);
-  }
-
   let dealTarget = 3;
 
   // Draw until dealer reaches or exceeds 17, or has 5 cards
@@ -435,7 +452,7 @@ async function dealer(){
     let dVal = await dealHelper(dc, true);
     sumDealer += dVal;
     // Check dealer aces
-    if (sumDealer > 17){
+    if (sumDealer > 21){
       for (let val of usedCards){
         if (val.classList.contains("ace") &&
         val.classList.contains("dealer") &&
@@ -455,52 +472,61 @@ async function dealer(){
   let endingStrs = [``,``];
   let playerHand = [sumPlayer, sumSplit];
   let moneyStr = "";
-  for (let i = 0; i <= 1; i++){
-    if (!playerSplit){
-      i = 2;
+  let loops = playerSplit? 2 : 1;
+  for (let i = 0; i < loops; i++){
+    if (playerHand[i] > 21) {
+      endingStrs[i] = `Hand: ${i + 1} Dealer wins. P: ${playerHand[i]} D: ${sumDealer} ${uname} bust!`
+      betPayout -= betAmnt;
     }
-    if (sumPlayer > 21) {
-      endingStrs[i] = `Game: ${i + 1} Dealer wins. P: ${playerHand[i]} D: ${sumDealer} Player bust!`
-      payout -= betAmnt;
+    else if (sumDealer > 21) {
+      endingStrs[i] = `Hand: ${i + 1} ${uname} wins! P: ${playerHand[i]} D: ${sumDealer} Dealer bust!`
+      betPayout += betAmnt * 2;
     }
-    if (sumDealer > 21) {
-      endingStrs[i] = `Game: ${i + 1} ${uname} wins! P: ${playerHand[i]} D: ${sumDealer} Dealer bust!`
-      payout += betAmnt;
+    else if (sumDealer > playerHand[i] && sumDealer <= 21){
+      endingStrs[i] = `Hand: ${i + 1} Dealer wins. P: ${playerHand[i]} D: ${sumDealer} Dealer closer to 21!`;
+      betPayout -= betAmnt;
     }
-    else if (sumDealer > sumPlayer && sumDealer <= 21){
-      endingStrs[i] = `Game: ${i + 1} Dealer wins. P: ${playerHand[i]} D: ${sumDealer} Dealer closer to 21!`;
-      payout -= betAmnt;
+    
+    else if (sumDealer < playerHand[i] && playerHand[i] <= 21){
+      endingStrs[i] = `Hand: ${i + 1} ${uname} wins! P: ${playerHand[i]} D: ${sumDealer} ${uname} closer to 21!`;
+      betPayout += betAmnt * 2;
     }
-
-    else if (sumDealer < sumPlayer && sumPlayer <= 21){
-      endingStrs[i] = `Game: ${i + 1} Player wins! P: ${playerHand[i]} D: ${sumDealer} Player closer to 21!`;
-      payout += betAmnt;
-    }
+    else if (sumDealer == 21){
+    endingStrs[i] = `Hand: ${i + 1} ${uname} loses. Dealer had blackjack!`;
+    betPayput -= betAmnt;
+  }
     else {
-      endingStrs[i] = `Game: ${i + 1} Dealer push! P: ${sumPlayer} D: ${sumDealer}`;
-      payout += betAmnt
+      endingStrs[i] = `Hand: ${i + 1} Dealer push! P: ${playerHand[i]} D: ${sumDealer}`;
+      betPayout += betAmnt;
     }
+    console.log(endingStrs[i]);
   }
-
-  if (payout > 0){
-    moneyStr = "Player wins $";
+  
+  if (betPayout > 0){
+    moneyStr = `${uname} wins $`;
   }
-  else if (payout == 0){
-    moneyStr = "Dealer push $"
+  else if (betPayout == 0){
+    moneyStr = "Dealer push $";
   }
   else
-    moneyStr = "Player lost $"
+    moneyStr = `${uname} lost $`;
   
-  endGame(endingStrs[0].concat(endingStrs[1]), moneyStr + payout);
-    //TODO: place if block in a for loop, if split is true loop twice else loop once
-    //first loop tracks first hand ending stats second loop tracks split hand
-    //will need to have 2 string variables to state how each game went
-    //and 1 var to keep track of money
-    //after the loop call end game accordingly, should only be 1 call with custom strings
+  money += betPayout;
+  // Need a way to set the internal money value
+  
+  endGame(endingStrs[0].concat(`\n` + endingStrs[1]), moneyStr + Math.abs(betPayout));
 }
 
+// Add bet action to buttons
+chips.forEach(chip => {
+  let betWrapper = () => {betHelper(chip.dataset.value);};
+  chip.addEventListener("click", betWrapper);
+})
+
 bjDeal.addEventListener("click", startGame);
+
 let regHit = () => {hit(false);};
+let splitHitWrapper = () =>{hit(true);};
 bjHit.addEventListener("click", regHit);
 bjStand.addEventListener("click", stand);
 bjDouble.addEventListener("click", double);
