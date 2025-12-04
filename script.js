@@ -133,6 +133,8 @@ function betHelper(value){
     money -= value;
     betAmnt += value;
     console.log(betAmnt);
+    setPlayerScore(money);
+    moneyDisplay.textContent = `$${money}`;
     document.getElementById("currency").textContent = `Betting: $${betAmnt}`;
     bjDeal.disabled = false;
   }
@@ -144,6 +146,7 @@ function betHelper(value){
 async function startGame(){
   chips.forEach(chip => {chip.disabled = true;});
   bjDeal.disabled = true;
+  resetBtn.disabled = true;
 
   // Super annoying but need to use await since deal helper is async and returns promise
   let pVal1 = await dealHelper(pc1, true);
@@ -259,6 +262,7 @@ async function endGame(endMessage, moneyMessage){
   bjSplit.disabled = true;
   bjStand.disabled = true;
   bjDouble.disabled = true;
+  resetBtn.disabled = true;
   chips.forEach(chip => {chip.disabled = false;});
 
   usedCards.forEach(used => {
@@ -512,7 +516,8 @@ async function dealer(){
     moneyStr = `${uname} lost $`;
   
   money += betPayout;
-  // Need a way to set the internal money value
+  setPlayerScore(money);
+  moneyDisplay.textContent = `$${money}`;
   
   endGame(endingStrs[0].concat(`\n` + endingStrs[1]), moneyStr + Math.abs(betPayout));
 }
@@ -527,6 +532,8 @@ const resetBtn = document.getElementById("reset-bet");
 resetBtn.addEventListener("click", () => {
   money += betAmnt;
   betAmnt = 0;
+  setPlayerScore(money);
+  moneyDisplay.textContent = `$${money}`;
   document.getElementById("currency").textContent = `Betting: $0`;
   bjDeal.disabled = true;
 });
