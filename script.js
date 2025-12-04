@@ -523,6 +523,14 @@ chips.forEach(chip => {
   chip.addEventListener("click", betWrapper);
 })
 
+const resetBtn = document.getElementById("reset-bet");
+resetBtn.addEventListener("click", () => {
+  money += betAmnt;
+  betAmnt = 0;
+  document.getElementById("currency").textContent = `Betting: $0`;
+  bjDeal.disabled = true;
+});
+
 bjDeal.addEventListener("click", startGame);
 
 let regHit = () => {hit(false);};

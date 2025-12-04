@@ -950,11 +950,15 @@ button.inverse {
   cursor: pointer;
 }
 
-#currency {
-  position: absolute;
-  bottom: 40px;
-  left: 930px;
-  transform: translateX(-50%);
+.chip.red {
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  background: red;
+  border: 6px dashed white;
+  color: white;
+  cursor: pointer;
+  text-align: center;
 }
 
 .hidden {
