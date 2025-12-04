@@ -5,6 +5,9 @@ let bjStand = document.getElementById("stand-button");
 let bjDouble = document.getElementById("double-button");
 let bjDeal = document.getElementById("deal-button");
 
+const chipArea = document.getElementById("chip-area");
+const currency = document.getElementById("currency");
+
 bjHit.disabled = true;
 bjSplit.disabled = true;
 bjStand.disabled = true;
@@ -197,6 +200,9 @@ async function startGame(){
 async function endGame(endMessage, moneyMessage){
   await wait (1000);
 
+  chipArea.classList.add("hidden");
+  currency.classList.add("hidden");
+
   // End game display window
   const blur = document.createElement("div");
   blur.setAttribute("class", "blur");
@@ -235,6 +241,9 @@ async function endGame(endMessage, moneyMessage){
   again.addEventListener("click", () => {
     document.body.removeChild(blur);
     document.body.removeChild(popup);
+
+    chipArea.classList.remove("hidden");
+    currency.classList.remove("hidden");
   });
 
   // Actual gameplay cleanup
