@@ -903,10 +903,11 @@ button.inverse {
 .end-replay{
   font-size: 1rem;
   margin-bottom: 3vh;
+  border-radius: 3px;;
 }
 
 .end-replay:hover{
-  background-color: rgb(00,6,400);
+  background-color: green;
 }
 
 #mobile-nav {

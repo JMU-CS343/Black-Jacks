@@ -37,9 +37,8 @@ let dDisplayedTotal = document.getElementById("dealer-total");
 
 // Need this to be global becasue accessed by both deal and split
 let pVal2;
-// Need this to be a global becasue it is accessed by both deal and dealer
+// Need these to be global becasue it is accessed by both deal and dealer
 let dVal2;
-
 let sTotal = document.getElementById("player-split-total");
 
 // Helpful game globals
@@ -54,6 +53,15 @@ let splitFirstHit = false;
 let playerDouble = false;
 let playerCanHit = true;
 let playerStands = 0;
+
+// Player-specific globals
+// Figure out how to fix this
+let uname;
+//let uname = document.getElementById("username").textContent;
+if (uname == null || uname == "")
+  uname = "Player";
+let betAmnt = 0;
+let payout = 0;
 
 // Return a promise that forces the calling function to wait
 // for ms time before proceeding
@@ -285,11 +293,13 @@ async function endGame(endMessage, moneyMessage){
   sumPlayer = 0;
   sumDealer = 0;
   sumSplit = 0;
-  console.log("GOOD");
   pDisplayedTotal.textContent = "Player Total: 0";
   dDisplayedTotal.textContent = "Dealer Total: 0";
   sDisplayedTotal.textContent = "Player Split Total: 0";
   usedCards = [];
+
+  betAmnt = 0;
+  payout = 0;
   
   bjHit.addEventListener("click", regHit);
 }
@@ -303,7 +313,6 @@ async function hit(split = false){
   
   // Helps preserve general logic when called for split cards
   if (split){
-    console.log("BAD");
     pc2 = sc2;
     pc3 = sc3;
     pc4 = sc4;
@@ -359,11 +368,7 @@ async function hit(split = false){
   updateTotal(pDisplayedTotal, hitVal);
 
   if (sumPlayer > 21){
-    if (split){
-      //TODO: handle bust logic, keep track of how player lost and loss amount and pass to dealer func later
-    }
-    //Say username instead of player, replace money later
-    endGame(`Player bust. P: ${sumPlayer} Dealer wins!`, `Player lost $0`);
+    //endGame(`Player bust. P: ${sumPlayer} Dealer wins!`, `Player lost $0`);
   }
 }
 
@@ -447,41 +452,51 @@ async function dealer(){
     dealTarget += 1;
   }
 
-  if (playerSplit) {
-    endGame("","");
+  let endingStrs = [``,``];
+  let playerHand = [sumPlayer, sumSplit];
+  let moneyStr = "";
+  for (let i = 0; i <= 1; i++){
+    if (!playerSplit){
+      i = 2;
+    }
+    if (sumPlayer > 21) {
+      endingStrs[i] = `Game: ${i + 1} Dealer wins. P: ${playerHand[i]} D: ${sumDealer} Player bust!`
+      payout -= betAmnt;
+    }
+    if (sumDealer > 21) {
+      endingStrs[i] = `Game: ${i + 1} ${uname} wins! P: ${playerHand[i]} D: ${sumDealer} Dealer bust!`
+      payout += betAmnt;
+    }
+    else if (sumDealer > sumPlayer && sumDealer <= 21){
+      endingStrs[i] = `Game: ${i + 1} Dealer wins. P: ${playerHand[i]} D: ${sumDealer} Dealer closer to 21!`;
+      payout -= betAmnt;
+    }
+
+    else if (sumDealer < sumPlayer && sumPlayer <= 21){
+      endingStrs[i] = `Game: ${i + 1} Player wins! P: ${playerHand[i]} D: ${sumDealer} Player closer to 21!`;
+      payout += betAmnt;
+    }
+    else {
+      endingStrs[i] = `Game: ${i + 1} Dealer push! P: ${sumPlayer} D: ${sumDealer}`;
+      payout += betAmnt
+    }
+  }
+
+  if (payout > 0){
+    moneyStr = "Player wins $";
+  }
+  else if (payout == 0){
+    moneyStr = "Dealer push $"
+  }
+  else
+    moneyStr = "Player lost $"
+  
+  endGame(endingStrs[0].concat(endingStrs[1]), moneyStr + payout);
     //TODO: place if block in a for loop, if split is true loop twice else loop once
     //first loop tracks first hand ending stats second loop tracks split hand
     //will need to have 2 string variables to state how each game went
     //and 1 var to keep track of money
     //after the loop call end game accordingly, should only be 1 call with custom strings
-  }
-  else if(sumDealer > 21){
-  // if (sumDealer > 21){
-    //TODO: player win
-    //Say username instead of player, replace money later
-    endGame(`Player wins! P: ${sumPlayer} D: ${sumDealer} Dealer bust!`, `Player won $0`);
-  }
-
-  else if (sumDealer > sumPlayer && sumDealer <= 21){
-    //TODO: dealer win
-    //Say username instead of player, replace money later
-    endGame(`Dealer wins. P: ${sumPlayer} D: ${sumDealer} Dealer closer to 21!`, `Player lost $0`);
-  }
-
-  else if (sumDealer < sumPlayer && sumPlayer <= 21){
-    //TODO: player win
-    if (playerDouble){
-      //TODO: double payment
-    }
-    //Say username instead of player, replace money later
-    endGame(`Player wins! P: ${sumPlayer} D: ${sumDealer} Player closer to 21!`, `Player won $0`);
-  }
-
-  else {
-    //TODO: dealer push
-    //Say username instead of player, replace money later
-    endGame(`Dealer push! P: ${sumPlayer} D: ${sumDealer}`, `Player bet returned`);
-  }
 }
 
 bjDeal.addEventListener("click", startGame);
