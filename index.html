@@ -163,18 +163,28 @@
 
   <!-- Mobile view will hide the chips when the other sections are clicked. -->
   <script>
-    const chipArea = document.getElementById("chip-area");
-    const decksBtn = document.querySelector('button[data-target="left"]');
-    const gameBtn = document.querySelector('button[data-target="center"]');
-    const leaderboardBtn = document.querySelector('button[data-target="right"]');
-    decksBtn.addEventListener("click", () => {
-      chipArea.classList.add("hidden")
-    });
-    leaderboardBtn.addEventListener("click", () => {
-      chipArea.classList.add("hidden")
-    });
-    gameBtn.addEventListener("click", () => {
-      chipArea.classList.remove("hidden")
+    document.addEventListener("DOMContentLoaded", () => {
+      const chipArea = document.getElementById("chip-area");
+      const currency = document.getElementById("currency");
+
+      const decksBtn = document.querySelector('button[data-target="left"]');
+      const gameBtn = document.querySelector('button[data-target="center"]');
+      const leaderboardBtn = document.querySelector('button[data-target="right"]');
+
+      decksBtn.addEventListener("click", () => {
+        chipArea.classList.add("hidden");
+        currency.classList.add("hidden");
+      });
+      
+      leaderboardBtn.addEventListener("click", () => {
+        chipArea.classList.add("hidden");
+        currency.classList.add("hidden");
+      });
+
+      gameBtn.addEventListener("click", () => {
+        chipArea.classList.remove("hidden");
+        currency.classList.remove("hidden");
+      });
     });
   </script>
 

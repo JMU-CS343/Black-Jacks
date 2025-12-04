@@ -906,7 +906,7 @@ button.inverse {
 }
 
 .end-replay:hover{
-  background-color: green;
+  background-color: rgb(00,6,400);
 }
 
 #mobile-nav {
@@ -915,12 +915,10 @@ button.inverse {
 
 #chip-area {
   position: absolute;
-  bottom: 120px;
-  left: 320px;
-  width: 180px;
-  height: 250px;
-  pointer-events: none;
-  z-index: auto;
+  bottom: 3rem;
+  pointer-events: auto;
+  z-index: 10;
+  width: 100%;
 }
 
 #left-chips {
@@ -929,7 +927,7 @@ button.inverse {
   bottom: -30px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 0.5rem;
 }
 
 #right-chips {
@@ -938,7 +936,7 @@ button.inverse {
   bottom: -30px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 0.5rem;
 }
 
 .chip {
@@ -1032,10 +1030,8 @@ button.inverse {
 
   /* Toggle between main columns */
   #mobile-nav {
-    margin-top: 3vh;
-    background-color: black;
-    border-bottom: 2px solid white;
-    border-top: 2px solid white;
+    background-color: #006400;
+    border: 2px solid #006400;
     display: flex;
     position: block;
     bottom: 0;
@@ -1049,7 +1045,9 @@ button.inverse {
     color: white;
     background-color: black;
     border: white 5px solid;
+    border-radius: 4px;
     text-align: center;
+    width: 30%;
   }
 
   /* Game style changes */
@@ -1229,6 +1227,7 @@ button.inverse {
     justify-content: center;
     gap: 12px;
     z-index: 2000;
+    margin-bottom: 3vh;
   }
 
   #left-chips,
