@@ -65,4 +65,22 @@ const decks = [
     },
 ]
 
+const deckProperties = [
+    "grey",
+    "blue",
+    "red",
+    "green",
+    "yellow",
+    "white",
+    "purple",
+    "rgb(128, 0, 0)",
+    "rgb(255, 105, 180)",
+    "rgb(240, 234, 213)",
+    "chromatic.png",
+    "metallic.png",
+    "glass.png",
+    "jmu.png",
+    "golden.png"
+]
+
 const costs = {"common": "$250", "uncommon": "$500", "rare": "$2000", "epic": "$5000", "legendary": "$15000"};

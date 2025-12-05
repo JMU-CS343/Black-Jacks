@@ -96,7 +96,30 @@ function selectDeck(id, i) {
             localStorage.setItem("deck-3", deck2);
         }
     }
+
+    handleVisualDeck(i);
 }
+
+function handleVisualDeck(i) {
+    const deck = document.querySelector(".dealer-deck");
+    const img = document.querySelector(".dealer-image");
+    if (i < 10) { 
+        img.style.display = "none";
+        img.src = "";
+        deck.style.background = deckProperties[i];
+    } else if (i <= decks.length - 2) {
+        console.log("Loading pre-built image");
+        img.src = `/card_imgs/${deckProperties[i]}`;
+        img.style.display = "block";
+    } else {
+        let custom = JSON.parse(localStorage.getItem("custom decks"));
+        deck.style.background = "transparent";
+
+        img.src = custom[i - decks.length + 1].src;
+        img.style.display = "block";
+    }
+}
+handleVisualDeck(localStorage.getItem("selectedDeck"));
 
 function deckInit() {
     document.getElementById("common-container").innerHTML = `<legend>Common</legend>`;

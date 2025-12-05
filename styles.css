@@ -212,8 +212,10 @@ li > button {
 }
 
 .dealer-deck {
+  align-items: center;
+  justify-content: center;
   position: relative;
-  background-color: grey;
+  background: grey;
   left: 300px;
   top: -40px;
   transform: rotate(30deg);
@@ -224,6 +226,21 @@ li > button {
   writing-mode: sideways-lr;
   z-index: 10;
   transition: transform 1s ease-in-out;
+  object-fit: fill;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.dealer-image {
+  position: absolute; 
+  top: 0;
+  left: 0;
+  width: 4vw;
+  height: 11vh;
+  object-fit: cover;
+  display: none;
+  border-radius: inherit;
 }
 
 .copy {
