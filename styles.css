@@ -1272,6 +1272,17 @@ button.inverse {
     color: white;
   }
 
+  .chip.red {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: red;
+    border: 6px dashed white;
+    color: white;
+    cursor: pointer;
+    text-align: center;
+  }
+
   #currency {
     position: static;
     transform: none;
