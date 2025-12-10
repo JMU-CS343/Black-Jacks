@@ -202,8 +202,10 @@ async function startGame(){
 async function endGame(endMessage, moneyMessage){
   await wait (1000);
 
-  chipArea.classList.add("hidden");
-  currency.classList.add("hidden");
+  // chipArea.classList.add("hidden");
+  // currency.classList.add("hidden");
+
+  chips.forEach(chip => { if (chip) chip.disabled = true; });
 
   // End game display window
   const blur = document.createElement("div");
@@ -246,6 +248,9 @@ async function endGame(endMessage, moneyMessage){
 
     chipArea.classList.remove("hidden");
     currency.classList.remove("hidden");
+
+    chips.forEach(chip => { if (chip) chip.disabled = false; });
+
   });
 
   // Actual gameplay cleanup
@@ -262,8 +267,7 @@ async function endGame(endMessage, moneyMessage){
   bjSplit.disabled = true;
   bjStand.disabled = true;
   bjDouble.disabled = true;
-  resetBtn.disabled = true;
-  chips.forEach(chip => {chip.disabled = false;});
+  resetBtn.disabled = false;
 
   usedCards.forEach(used => {
     if (used.classList.contains("player")){
@@ -532,10 +536,8 @@ const resetBtn = document.getElementById("reset-bet");
 resetBtn.addEventListener("click", () => {
   money += betAmnt;
   betAmnt = 0;
-  setPlayerScore(money);
   moneyDisplay.textContent = `$${money}`;
-  document.getElementById("currency").textContent = `Betting: $0`;
-  bjDeal.disabled = true;
+  document.getElementById("currency").textContent = `Betting: $${betAmnt}`;
 });
 
 bjDeal.addEventListener("click", startGame);
