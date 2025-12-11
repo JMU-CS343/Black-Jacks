@@ -69,10 +69,12 @@ function selectDeck(id, i) {
         }
     }
     const customDecks = JSON.parse(localStorage.getItem("custom decks"));
-    for (let deck of customDecks) {
-        const custom = document.getElementById(`deck-${deck.name}`);
-        if (custom != null) {
-            custom.classList.remove("selectedDeck");
+    if (customDecks != null) {
+        for (let deck of customDecks) {
+            const custom = document.getElementById(`deck-${deck.name}`);
+            if (custom != null) {
+                custom.classList.remove("selectedDeck");
+            }
         }
     }
     document.getElementById(id).classList.add("selectedDeck");
